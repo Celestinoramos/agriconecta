@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import produtos from "@/data/produtos.json";
@@ -49,10 +50,12 @@ export default function ProdutosPage() {
             {produtos.map((produto) => (
               <Card key={produto.id} className="overflow-hidden hover:shadow-lg transition-shadow">
                 <div className="aspect-square w-full bg-gray-200 relative overflow-hidden">
-                  <img
+                  <Image
                     src={produto.imagem}
                     alt={produto.nome}
-                    className="object-cover w-full h-full"
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                 </div>
                 <CardHeader>
