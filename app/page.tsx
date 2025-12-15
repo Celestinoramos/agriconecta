@@ -10,67 +10,67 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-green-600 to-green-700 text-white py-20 px-4">
+      {/* Hero Section - Mobile First */}
+      <section className="bg-gradient-to-br from-green-600 to-green-700 text-white py-12 px-4 sm:py-16 md:py-20">
         <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
+          <h1 className="text-3xl font-bold mb-4 sm:text-4xl md:text-5xl lg:text-6xl">
             Bem-vindo ao AgriConecta
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-green-100">
+          <p className="text-lg mb-4 text-green-100 sm:text-xl md:text-2xl md:mb-6">
             Conectando agricultores e consumidores em Angola
           </p>
-          <p className="text-lg mb-8 max-w-2xl mx-auto">
+          <p className="text-base mb-6 max-w-2xl mx-auto sm:text-lg md:mb-8">
             Compre produtos frescos diretamente dos produtores locais. 
             Apoie a agricultura angolana e desfrute da qualidade dos nossos produtos.
           </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <Button asChild size="lg" className="bg-white text-green-700 hover:bg-green-50">
+          <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 sm:justify-center">
+            <Button asChild size="lg" className="bg-white text-green-700 hover:bg-green-50 min-h-[44px] w-full sm:w-auto">
               <Link href="/produtos">Ver Produtos</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-green-700">
+            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-green-700 min-h-[44px] w-full sm:w-auto">
               <Link href="/servicos">Serviços para Agricultores</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Featured Products Section */}
-      <section className="py-16 px-4">
+      {/* Featured Products Section - Mobile First Grid */}
+      <section className="py-12 px-4 sm:py-14 md:py-16">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 sm:mb-10 md:mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-3 sm:text-3xl md:text-4xl md:mb-4">
               Produtos em Destaque
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-base text-gray-600 sm:text-lg">
               Produtos frescos e de qualidade dos nossos agricultores
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 gap-4 mb-6 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 md:mb-8">
             {featuredProducts.map((produto) => (
-              <Card key={produto.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="aspect-square w-full bg-gray-200 relative overflow-hidden">
+              <Card key={produto.id} className="overflow-hidden hover:shadow-lg transition-shadow active:scale-[0.98]">
+                <div className="aspect-[4/3] w-full bg-gray-200 relative overflow-hidden">
                   <Image
                     src={produto.imagem}
                     alt={produto.nome}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 </div>
-                <CardHeader>
-                  <CardTitle>{produto.nome}</CardTitle>
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-lg sm:text-xl">{produto.nome}</CardTitle>
                   <CardDescription>{produto.descricao}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="flex justify-between items-center">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:justify-between sm:items-center">
                     <div>
-                      <p className="text-2xl font-bold text-green-600">
+                      <p className="text-xl font-bold text-green-600 sm:text-2xl">
                         {produto.preco.toLocaleString('pt-AO')} Kz
                       </p>
                       <p className="text-sm text-gray-500">{produto.provincia}</p>
                     </div>
-                    <Button>Comprar</Button>
+                    <Button className="w-full sm:w-auto min-h-[44px]">Comprar</Button>
                   </div>
                 </CardContent>
               </Card>
@@ -78,49 +78,49 @@ export default function Home() {
           </div>
 
           <div className="text-center">
-            <Button asChild size="lg">
+            <Button asChild size="lg" className="w-full sm:w-auto min-h-[44px]">
               <Link href="/produtos">Ver Todos os Produtos</Link>
             </Button>
           </div>
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="py-16 px-4 bg-white">
+      {/* Benefits Section - Mobile First Stack */}
+      <section className="py-12 px-4 bg-white sm:py-14 md:py-16">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+          <div className="text-center mb-8 sm:mb-10 md:mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-3 sm:text-3xl md:text-4xl md:mb-4">
               Por que escolher o AgriConecta?
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
+          <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3">
+            <div className="text-center px-4">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-3xl">🌱</span>
               </div>
-              <h3 className="text-xl font-semibold mb-2">Produtos Frescos</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg font-semibold mb-2 sm:text-xl">Produtos Frescos</h3>
+              <p className="text-gray-600 text-sm sm:text-base">
                 Produtos colhidos recentemente, diretamente dos agricultores para sua mesa
               </p>
             </div>
 
-            <div className="text-center">
+            <div className="text-center px-4">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-3xl">🤝</span>
               </div>
-              <h3 className="text-xl font-semibold mb-2">Apoio Local</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg font-semibold mb-2 sm:text-xl">Apoio Local</h3>
+              <p className="text-gray-600 text-sm sm:text-base">
                 Apoie os agricultores angolanos e fortaleça a economia local
               </p>
             </div>
 
-            <div className="text-center">
+            <div className="text-center px-4">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-3xl">✅</span>
               </div>
-              <h3 className="text-xl font-semibold mb-2">Qualidade Garantida</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg font-semibold mb-2 sm:text-xl">Qualidade Garantida</h3>
+              <p className="text-gray-600 text-sm sm:text-base">
                 Todos os produtos são verificados para garantir a melhor qualidade
               </p>
             </div>
@@ -129,15 +129,15 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-4 bg-green-600 text-white">
+      <section className="py-12 px-4 bg-green-600 text-white sm:py-14 md:py-16">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-2xl font-bold mb-3 sm:text-3xl md:text-4xl md:mb-4">
             Pronto para começar?
           </h2>
-          <p className="text-xl mb-8 text-green-100">
+          <p className="text-lg mb-6 text-green-100 sm:text-xl md:mb-8">
             Explore nosso catálogo completo de produtos agrícolas
           </p>
-          <Button asChild size="lg" className="bg-white text-green-700 hover:bg-green-50">
+          <Button asChild size="lg" className="bg-white text-green-700 hover:bg-green-50 w-full sm:w-auto min-h-[44px]">
             <Link href="/produtos">Explorar Catálogo</Link>
           </Button>
         </div>

@@ -1,5 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import Header from "@/components/layout/Header";
+import BottomNav from "@/components/layout/BottomNav";
+import Footer from "@/components/layout/Footer";
+import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
 
 export const metadata: Metadata = {
   title: "AgriConecta - Marketplace Agrícola de Angola",
@@ -48,8 +52,28 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   icons: {
     icon: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
+    apple: '/icons/apple-touch-icon.png',
   },
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'AgriConecta',
+  },
+  formatDetection: {
+    telephone: true,
+  },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: 'cover',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#16a34a' },
+    { media: '(prefers-color-scheme: dark)', color: '#166534' },
+  ],
 };
 
 export default function RootLayout({
@@ -59,7 +83,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-AO">
-      <body className="font-sans antialiased">{children}</body>
+      <head>
+        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+      </head>
+      <body className="font-sans antialiased">
+        <ServiceWorkerRegistration />
+        <Header />
+        {children}
+        <Footer />
+        <BottomNav />
+      </body>
     </html>
   );
 }
