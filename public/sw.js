@@ -1,15 +1,11 @@
 // AgriConecta Service Worker
 const CACHE_NAME = 'agriconecta-v1';
-const OFFLINE_URLS = [
-  '/',
-  '/produtos',
-  '/servicos',
-  '/manifest.json',
-];
 
 // Assets to cache on install
 const STATIC_ASSETS = [
   '/',
+  '/produtos',
+  '/servicos',
   '/manifest.json',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',
@@ -21,7 +17,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[SW] Caching static assets');
-      return cache.addAll(STATIC_ASSETS.map(url => new Request(url, { cache: 'reload' })));
+      return cache.addAll(STATIC_ASSETS);
     }).then(() => {
       console.log('[SW] Installation complete');
       return self.skipWaiting();

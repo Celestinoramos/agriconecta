@@ -41,6 +41,7 @@ export default function BottomNav() {
                   ? 'text-green-600'
                   : 'text-gray-500 hover:text-green-600'
               }`}
+              aria-current={isActive ? 'page' : undefined}
             >
               <Icon className="h-5 w-5" />
               <span className="text-xs font-medium">{item.label}</span>

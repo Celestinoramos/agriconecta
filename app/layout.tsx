@@ -83,11 +83,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-AO">
-      <head>
-        <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-      </head>
       <body className="font-sans antialiased">
         <ServiceWorkerRegistration />
         <Header />
