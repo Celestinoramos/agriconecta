@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "nome": "Tomate Fresco",
+    "descricao": "Tomates frescos e suculentos, cultivados naturalmente na província da Huíla. Perfeitos para saladas e molhos.",
+    "preco": 350,
+    "categoria": "Legumes",
+    "imagem": "https://images.unsplash.com/photo-1700064165267-8fa68ef07167?w=400",
+    "produtor": "Fazenda Vale Verde",
+    "provincia": "Huíla",
+    "disponibilidade": "Em stock"
+  },
+  {
+    "id": 2,
+    "nome": "Mandioca",
+    "descricao": "Mandioca de alta qualidade, ideal para funge, caldeirada ou frita. Produto tradicional angolano.",
+    "preco": 120,
+    "categoria": "Cereais",
+    "imagem": "https://images.unsplash.com/photo-1757283961570-682154747d9c?w=400",
+    "produtor": "Cooperativa Malanje",
+    "provincia": "Malanje",
+    "disponibilidade": "Em stock"
+  },
+  {
+    "id": 3,
+    "nome": "Batata Doce",
+    "descricao": "Batata doce nutritiva e saborosa, rica em vitaminas. Cultivada em Benguela.",
+    "preco": 180,
+    "categoria": "Legumes",
+    "imagem": "https://images.unsplash.com/photo-1730815048561-45df6f7f331d?w=400",
+    "produtor": "Agro Benguela",
+    "provincia": "Benguela",
+    "disponibilidade": "Em stock"
+  },
+  {
+    "id": 4,
+    "nome": "Banana Prata",
+    "descricao": "Bananas frescas e doces, colhidas no ponto ideal de maturação. Fonte natural de energia.",
+    "preco": 200,
+    "categoria": "Frutas",
+    "imagem": "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400",
+    "produtor": "Plantação Tropical",
+    "provincia": "Uíge",
+    "disponibilidade": "Em stock"
+  },
+  {
+    "id": 5,
+    "nome": "Abóbora",
+    "descricao": "Abóbora madura e saborosa, ideal para sopas e pratos tradicionais angolanos.",
+    "preco": 90,
+    "categoria": "Legumes",
+    "imagem": "https://images.unsplash.com/photo-1570586437263-ab629fccc818?w=400",
+    "produtor": "Horta do Sul",
+    "provincia": "Namibe",
+    "disponibilidade": "Em stock"
+  },
+  {
+    "id": 6,
+    "nome": "Feijão Manteiga",
+    "descricao": "Feijão manteiga de primeira qualidade, perfeito para o tradicional calulu.",
+    "preco": 450,
+    "categoria": "Cereais",
+    "imagem": "https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=400",
+    "produtor": "Sementes do Planalto",
+    "provincia": "Huambo",
+    "disponibilidade": "Em stock"
+  },
+  {
+    "id": 7,
+    "nome": "Cebola",
+    "descricao": "Cebola roxa fresca, essencial para temperar os pratos angolanos.",
+    "preco": 280,
+    "categoria": "Legumes",
+    "imagem": "https://images.unsplash.com/photo-1587049352846-4a222e784466?w=400",
+    "produtor": "Fazenda Nova Esperança",
+    "provincia": "Cunene",
+    "disponibilidade": "Em stock"
+  },
+  {
+    "id": 8,
+    "nome": "Milho",
+    "descricao": "Milho amarelo fresco, perfeito para fazer fuba ou comer cozido.",
+    "preco": 150,
+    "categoria": "Cereais",
+    "imagem": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400",
+    "produtor": "Cooperativa do Norte",
+    "provincia": "Zaire",
+    "disponibilidade": "Em stock"
+  }
+]
