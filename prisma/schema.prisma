@@ -1,0 +1,159 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== UTILIZADORES ====================
+
+model User {
+  id            String    @id @default(cuid())
+  email         String?   @unique
+  telefone      String?   @unique
+  nome          String?
+  password      String?   // Hash bcrypt, opcional para convidados
+  emailVerified DateTime?
+  isGuest       Boolean   @default(false) // Conta de convidado
+  
+  pedidos       Pedido[]
+  enderecos     Endereco[]
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Endereco {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  nome       String   // "Casa", "Trabalho", etc.
+  rua        String
+  bairro     String
+  municipio  String
+  provincia  String
+  referencia String?  // Ponto de referência
+  principal  Boolean  @default(false)
+  
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  
+  @@index([userId])
+}
+
+// ==================== PEDIDOS ====================
+
+model Pedido {
+  id              String          @id @default(cuid())
+  numero          String          @unique // Formato: AGC-2024-00001
+  
+  // Relação com utilizador (opcional para convidados)
+  userId          String?
+  user            User?           @relation(fields: [userId], references: [id])
+  
+  // Dados do cliente (sempre preenchidos, mesmo para utilizadores registados)
+  clienteNome     String
+  clienteEmail    String?
+  clienteTelefone String
+  
+  // Endereço de entrega (snapshot JSON)
+  enderecoEntrega Json
+  
+  // Itens do pedido
+  itens           ItemPedido[]
+  
+  // Valores monetários (em AOA, armazenados como Decimal para precisão)
+  subtotal        Decimal         @db.Decimal(12, 2)
+  taxaEntrega     Decimal         @default(0) @db.Decimal(12, 2)
+  desconto        Decimal         @default(0) @db.Decimal(12, 2)
+  total           Decimal         @db.Decimal(12, 2)
+  
+  // Pagamento
+  metodoPagamento MetodoPagamento
+  referenciaPagamento String?     // Referência Multicaixa ou bancária
+  comprovativoUrl String?         // URL do comprovativo (se upload)
+  
+  // Estado actual
+  estado          EstadoPedido    @default(PENDENTE)
+  estadoHistorico EstadoHistorico[]
+  
+  // Fatura
+  faturaNumero    String?         @unique // Formato: FT-2024-00001
+  faturaGeradaEm  DateTime?
+  faturaUrl       String?         // URL do PDF da fatura
+  
+  // Código de rastreio público
+  codigoRastreio  String          @unique @default(cuid())
+  
+  // Notas
+  notasCliente    String?         // Notas do cliente no checkout
+  notasInternas   String?         // Notas internas (admin)
+  
+  // Timestamps
+  criadoEm        DateTime        @default(now())
+  pagoEm          DateTime?
+  preparadoEm     DateTime?
+  enviadoEm       DateTime?
+  entregueEm      DateTime?
+  canceladoEm     DateTime?
+  
+  updatedAt       DateTime        @updatedAt
+  
+  @@index([userId])
+  @@index([estado])
+  @@index([criadoEm])
+  @@index([numero])
+  @@index([codigoRastreio])
+}
+
+model ItemPedido {
+  id           String  @id @default(cuid())
+  pedidoId     String
+  pedido       Pedido  @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  
+  // Snapshot do produto no momento da compra
+  produtoId    String
+  produtoSlug  String
+  produtoNome  String
+  produtoPreco Decimal @db.Decimal(12, 2)
+  produtoImagem String?
+  produtoUnidade String @default("unidade")
+  
+  quantidade   Int
+  subtotal     Decimal @db.Decimal(12, 2)
+  
+  @@index([pedidoId])
+}
+
+model EstadoHistorico {
+  id        String       @id @default(cuid())
+  pedidoId  String
+  pedido    Pedido       @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+  
+  estado    EstadoPedido
+  nota      String?      // Nota opcional sobre a mudança de estado
+  criadoPor String?      // ID do admin ou "sistema"
+  
+  criadoEm  DateTime     @default(now())
+  
+  @@index([pedidoId])
+}
+
+// ==================== ENUMS ====================
+
+enum EstadoPedido {
+  PENDENTE        // Aguardando pagamento
+  PAGO            // Pagamento confirmado
+  EM_PREPARACAO   // Pedido a ser preparado
+  EM_TRANSITO     // Pedido enviado/em entrega
+  ENTREGUE        // Pedido entregue
+  CANCELADO       // Pedido cancelado
+}
+
+enum MetodoPagamento {
+  MULTICAIXA_EXPRESS
+  TRANSFERENCIA_BANCARIA
+}
