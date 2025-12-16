@@ -2,23 +2,30 @@ import prisma from '@/lib/prisma';
 import { CriarPedidoDTO, ActualizarEstadoDTO, EstadoPedido } from '@/types/pedido';
 import { Decimal } from '@prisma/client/runtime/library';
 
+// Constantes de configuração
+const TAXA_ENTREGA_PADRAO = 0; // Pode ser calculado baseado na localização
+
 // Gerar número do pedido: AGC-2024-00001
 async function gerarNumeroPedido(): Promise<string> {
   const ano = new Date().getFullYear();
   const prefixo = `AGC-${ano}-`;
   
-  const ultimoPedido = await prisma.pedido.findFirst({
-    where: { numero: { startsWith: prefixo } },
-    orderBy: { numero: 'desc' },
+  // Usar transação para evitar race conditions
+  return await prisma.$transaction(async (tx) => {
+    const ultimoPedido = await tx.pedido.findFirst({
+      where: { numero: { startsWith: prefixo } },
+      orderBy: { numero: 'desc' },
+      select: { numero: true },
+    });
+    
+    let sequencia = 1;
+    if (ultimoPedido) {
+      const ultimoNumero = parseInt(ultimoPedido.numero.split('-')[2], 10);
+      sequencia = ultimoNumero + 1;
+    }
+    
+    return `${prefixo}${sequencia.toString().padStart(5, '0')}`;
   });
-  
-  let sequencia = 1;
-  if (ultimoPedido) {
-    const ultimoNumero = parseInt(ultimoPedido.numero.split('-')[2], 10);
-    sequencia = ultimoNumero + 1;
-  }
-  
-  return `${prefixo}${sequencia.toString().padStart(5, '0')}`;
 }
 
 // Gerar número da fatura: FT-2024-00001
@@ -26,18 +33,22 @@ async function gerarNumeroFatura(): Promise<string> {
   const ano = new Date().getFullYear();
   const prefixo = `FT-${ano}-`;
   
-  const ultimaFatura = await prisma.pedido.findFirst({
-    where: { faturaNumero: { startsWith: prefixo } },
-    orderBy: { faturaNumero: 'desc' },
+  // Usar transação para evitar race conditions
+  return await prisma.$transaction(async (tx) => {
+    const ultimaFatura = await tx.pedido.findFirst({
+      where: { faturaNumero: { startsWith: prefixo } },
+      orderBy: { faturaNumero: 'desc' },
+      select: { faturaNumero: true },
+    });
+    
+    let sequencia = 1;
+    if (ultimaFatura && ultimaFatura.faturaNumero) {
+      const ultimoNumero = parseInt(ultimaFatura.faturaNumero.split('-')[2], 10);
+      sequencia = ultimoNumero + 1;
+    }
+    
+    return `${prefixo}${sequencia.toString().padStart(5, '0')}`;
   });
-  
-  let sequencia = 1;
-  if (ultimaFatura && ultimaFatura.faturaNumero) {
-    const ultimoNumero = parseInt(ultimaFatura.faturaNumero.split('-')[2], 10);
-    sequencia = ultimoNumero + 1;
-  }
-  
-  return `${prefixo}${sequencia.toString().padStart(5, '0')}`;
 }
 
 export async function criarPedido(dados: CriarPedidoDTO) {
@@ -51,7 +62,7 @@ export async function criarPedido(dados: CriarPedidoDTO) {
   }));
   
   const subtotal = itensComSubtotal.reduce((acc, item) => acc + item.subtotal, 0);
-  const taxaEntrega = 0; // Pode ser calculado baseado na localização
+  const taxaEntrega = TAXA_ENTREGA_PADRAO;
   const desconto = 0;
   const total = subtotal + taxaEntrega - desconto;
   

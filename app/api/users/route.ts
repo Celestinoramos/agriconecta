@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { criarUser, obterUserPorEmail, obterUserPorTelefone } from '@/lib/db/users';
+import { sanitizeUser } from '@/lib/utils-server';
 import { CriarUserDTO } from '@/types/user';
 import bcrypt from 'bcryptjs';
 
@@ -47,9 +48,8 @@ export async function POST(request: NextRequest) {
       password: passwordHash,
     });
     
-    // Não retornar a password
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _password, ...userSemPassword } = user;
+    // Remover campos sensíveis antes de retornar
+    const userSemPassword = sanitizeUser(user);
     
     return NextResponse.json(userSemPassword, { status: 201 });
   } catch (error) {
