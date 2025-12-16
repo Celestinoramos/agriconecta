@@ -4,6 +4,9 @@ import Header from "@/components/layout/Header";
 import BottomNav from "@/components/layout/BottomNav";
 import Footer from "@/components/layout/Footer";
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
+import { CartProvider } from "@/components/cart/CartContext";
+import CartDrawer from "@/components/cart/CartDrawer";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "AgriConecta - Marketplace Agrícola de Angola",
@@ -84,11 +87,15 @@ export default function RootLayout({
   return (
     <html lang="pt-AO">
       <body className="font-sans antialiased">
-        <ServiceWorkerRegistration />
-        <Header />
-        {children}
-        <Footer />
-        <BottomNav />
+        <CartProvider>
+          <ServiceWorkerRegistration />
+          <Header />
+          {children}
+          <Footer />
+          <BottomNav />
+          <CartDrawer />
+          <Toaster position="top-center" richColors />
+        </CartProvider>
       </body>
     </html>
   );
