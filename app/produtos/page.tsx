@@ -1,5 +1,8 @@
 'use client';
 
+// Note: This page is a client component to support interactive cart functionality.
+// SEO metadata is handled by the root layout.tsx
+
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";

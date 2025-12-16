@@ -14,10 +14,17 @@ export default function CarrinhoPage() {
   const { items, total, itemCount, updateQuantity, removeItem, clearCart } = useCart();
 
   const handleClearCart = () => {
-    if (confirm('Tem certeza que deseja limpar o carrinho?')) {
-      clearCart();
-      toast.success('Carrinho limpo');
-    }
+    // Use toast for confirmation instead of native confirm
+    toast('Limpar carrinho?', {
+      description: 'Esta ação não pode ser desfeita.',
+      action: {
+        label: 'Confirmar',
+        onClick: () => {
+          clearCart();
+          toast.success('Carrinho limpo');
+        },
+      },
+    });
   };
 
   return (

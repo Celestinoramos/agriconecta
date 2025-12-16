@@ -13,9 +13,12 @@ interface CartItemForMessage {
  * Gera a mensagem formatada do pedido para WhatsApp
  */
 export function gerarMensagemPedido(items: CartItemForMessage[], total: number): string {
-  // Sanitizar dados para evitar XSS
+  // Sanitizar dados para evitar injeção de código
+  // Remove caracteres potencialmente perigosos mantendo acentos e emojis
   const sanitizeText = (text: string) => {
-    return text.replace(/[<>]/g, '');
+    return text
+      .replace(/[<>'"]/g, '') // Remove caracteres HTML/JS perigosos
+      .trim();
   };
 
   let mensagem = 'Olá! Gostaria de fazer um pedido no AgriConecta:\n\n';
