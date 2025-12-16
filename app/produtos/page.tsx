@@ -54,17 +54,23 @@ export default function ProdutosPage() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
             {produtos.map((produto) => (
               <Card key={produto.id} className="overflow-hidden hover:shadow-lg transition-shadow active:scale-[0.98]">
-                <div className="aspect-[4/3] w-full bg-gray-200 relative overflow-hidden">
-                  <Image
-                    src={produto.imagem}
-                    alt={produto.nome}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  />
-                </div>
+                <Link href={`/produtos/${produto.slug}`}>
+                  <div className="aspect-[4/3] w-full bg-gray-200 relative overflow-hidden">
+                    <Image
+                      src={produto.imagem}
+                      alt={produto.nome}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    />
+                  </div>
+                </Link>
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-base sm:text-lg">{produto.nome}</CardTitle>
+                  <Link href={`/produtos/${produto.slug}`}>
+                    <CardTitle className="text-base sm:text-lg hover:text-green-600 transition-colors">
+                      {produto.nome}
+                    </CardTitle>
+                  </Link>
                   <CardDescription className="line-clamp-2 text-sm">
                     {produto.descricao}
                   </CardDescription>
