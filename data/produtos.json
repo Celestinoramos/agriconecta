@@ -8,7 +8,76 @@
     "imagem": "https://images.unsplash.com/photo-1700064165267-8fa68ef07167?w=400",
     "produtor": "Fazenda Vale Verde",
     "provincia": "Huíla",
-    "disponibilidade": "Em stock"
+    "disponibilidade": true,
+    "slug": "tomate-fresco",
+    "descricaoCompleta": "Os nossos tomates são cultivados com técnicas agrícolas sustentáveis na província da Huíla, uma das regiões mais férteis de Angola. Colhidos no ponto ideal de maturação, estes tomates apresentam uma cor vermelha vibrante, polpa suculenta e sabor equilibrado entre doce e ácido.\n\nCada tomate é cuidadosamente selecionado para garantir a máxima qualidade. São ideais para saladas frescas, molhos caseiros, caldeiradas e uma variedade de pratos da culinária angolana. Rico em licopeno, vitamina C e antioxidantes, o tomate é um alimento essencial para uma dieta saudável.\n\nA Fazenda Vale Verde orgulha-se de produzir alimentos sem uso de pesticidas químicos agressivos, respeitando o meio ambiente e a saúde dos consumidores.",
+    "imagens": [
+      "https://images.unsplash.com/photo-1700064165267-8fa68ef07167?w=800",
+      "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=800",
+      "https://images.unsplash.com/photo-1561136594-7f68413baa99?w=800",
+      "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800"
+    ],
+    "unidade": "kg",
+    "pesoAproximado": "150-200g por unidade",
+    "origem": {
+      "fazenda": "Fazenda Vale Verde",
+      "localizacao": "Lubango",
+      "provincia": "Huíla"
+    },
+    "produtorInfo": {
+      "nome": "Fazenda Vale Verde",
+      "descricao": "Produtora familiar especializada em hortaliças orgânicas há mais de 15 anos. Comprometida com práticas agrícolas sustentáveis e comércio justo.",
+      "imagem": "https://images.unsplash.com/photo-1595855759920-86582396756a?w=200",
+      "desde": 2008,
+      "certificacoes": ["Agricultura Orgânica", "Comércio Justo"]
+    },
+    "nutricional": {
+      "calorias": 18,
+      "proteinas": 0.9,
+      "carboidratos": 3.9,
+      "fibras": 1.2,
+      "gorduras": 0.2,
+      "sodio": 5
+    },
+    "conservacao": "Conservar em local fresco e arejado, longe da luz solar directa. Para maior durabilidade, pode refrigerar, mas retirar 30 minutos antes de consumir para melhor sabor. Duração aproximada: 5-7 dias.",
+    "epocaColheita": ["Novembro", "Dezembro", "Janeiro", "Fevereiro", "Março"],
+    "produtosRelacionados": ["3", "5", "7"],
+    "tags": ["orgânico", "local", "fresco", "vitaminas"],
+    "avaliacoes": [
+      {
+        "id": "av1-1",
+        "autor": "Maria Silva",
+        "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100",
+        "nota": 5,
+        "comentario": "Tomates incríveis! Muito frescos e saborosos. Os melhores que já comprei em Luanda.",
+        "data": "2024-12-10T10:30:00Z"
+      },
+      {
+        "id": "av1-2",
+        "autor": "João Paulo",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100",
+        "nota": 5,
+        "comentario": "Qualidade excelente. Usei para fazer molho e ficou perfeito. Recomendo!",
+        "data": "2024-12-08T15:20:00Z"
+      },
+      {
+        "id": "av1-3",
+        "autor": "Ana Costa",
+        "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100",
+        "nota": 4,
+        "comentario": "Muito bons, só achei o preço um pouco alto. Mas a qualidade compensa.",
+        "data": "2024-12-05T09:15:00Z"
+      },
+      {
+        "id": "av1-4",
+        "autor": "Pedro Santos",
+        "nota": 5,
+        "comentario": "Produto fresco e de qualidade. Chegou bem embalado. Voltarei a comprar.",
+        "data": "2024-12-01T14:45:00Z"
+      }
+    ],
+    "mediaAvaliacoes": 4.75,
+    "totalAvaliacoes": 4
   },
   {
     "id": 2,
@@ -19,7 +88,66 @@
     "imagem": "https://images.unsplash.com/photo-1757283961570-682154747d9c?w=400",
     "produtor": "Cooperativa Malanje",
     "provincia": "Malanje",
-    "disponibilidade": "Em stock"
+    "disponibilidade": true,
+    "slug": "mandioca",
+    "descricaoCompleta": "A mandioca é um dos alimentos mais tradicionais e versáteis da culinária angolana. Cultivada nas terras férteis de Malanje, esta raiz tuberosa é a base de pratos icónicos como o funge, além de poder ser consumida cozida, frita ou na caldeirada.\n\nA nossa mandioca é cuidadosamente seleccionada, garantindo raízes de tamanho uniforme, com polpa branca e firme. Rica em carboidratos complexos, é uma excelente fonte de energia para o dia-a-dia. A Cooperativa Malanje trabalha com pequenos agricultores locais, promovendo o desenvolvimento sustentável da região.\n\nAo escolher a nossa mandioca, está a apoiar directamente as famílias de agricultores angolanos e a preservar as tradições alimentares do nosso país.",
+    "imagens": [
+      "https://images.unsplash.com/photo-1757283961570-682154747d9c?w=800",
+      "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=800",
+      "https://images.unsplash.com/photo-1585238341710-4a2d4e28c9b5?w=800"
+    ],
+    "unidade": "kg",
+    "pesoAproximado": "300-500g por raiz",
+    "origem": {
+      "fazenda": "Cooperativa Malanje",
+      "localizacao": "Malanje",
+      "provincia": "Malanje"
+    },
+    "produtorInfo": {
+      "nome": "Cooperativa Malanje",
+      "descricao": "Cooperativa de agricultores familiares que reúne mais de 200 produtores da região de Malanje, focada em culturas tradicionais angolanas.",
+      "desde": 2010,
+      "certificacoes": ["Comércio Justo"]
+    },
+    "nutricional": {
+      "calorias": 160,
+      "proteinas": 1.4,
+      "carboidratos": 38.1,
+      "fibras": 1.8,
+      "gorduras": 0.3,
+      "sodio": 14
+    },
+    "conservacao": "Conservar em local fresco, seco e ventilado. Não refrigerar. Após descascada, deve ser cozida imediatamente ou conservada em água fria no frigorífico por até 2 dias. Duração aproximada: 7-10 dias.",
+    "epocaColheita": ["Todo o ano"],
+    "produtosRelacionados": ["6", "8", "3"],
+    "tags": ["tradicional", "carboidratos", "versátil", "funge"],
+    "avaliacoes": [
+      {
+        "id": "av2-1",
+        "autor": "Luísa Fernandes",
+        "avatar": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=100",
+        "nota": 5,
+        "comentario": "Mandioca de primeira qualidade! Fiz funge e ficou perfeito. Muito fresca.",
+        "data": "2024-12-12T11:20:00Z"
+      },
+      {
+        "id": "av2-2",
+        "autor": "Carlos Mendes",
+        "nota": 5,
+        "comentario": "Excelente produto. A melhor mandioca que encontrei no mercado online.",
+        "data": "2024-12-09T16:30:00Z"
+      },
+      {
+        "id": "av2-3",
+        "autor": "Isabel Neto",
+        "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100",
+        "nota": 4,
+        "comentario": "Boa qualidade, mas algumas raízes vieram um pouco pequenas.",
+        "data": "2024-12-03T10:45:00Z"
+      }
+    ],
+    "mediaAvaliacoes": 4.67,
+    "totalAvaliacoes": 3
   },
   {
     "id": 3,
@@ -30,7 +158,66 @@
     "imagem": "https://images.unsplash.com/photo-1730815048561-45df6f7f331d?w=400",
     "produtor": "Agro Benguela",
     "provincia": "Benguela",
-    "disponibilidade": "Em stock"
+    "disponibilidade": true,
+    "slug": "batata-doce",
+    "descricaoCompleta": "A batata doce da Agro Benguela é cultivada nas terras ricas da costa angolana, beneficiando do clima ideal para o desenvolvimento de tubérculos nutritivos e saborosos. Com sua polpa alaranjada e sabor naturalmente doce, é uma excelente fonte de vitamina A, fibras e carboidratos complexos.\n\nVersátil na cozinha, pode ser preparada cozida, assada, frita ou utilizada em sobremesas tradicionais. É perfeita para acompanhar pratos de carne, peixe ou como lanche saudável. A batata doce também é conhecida pelos seus benefícios para a saúde, incluindo o fortalecimento do sistema imunológico.\n\nA Agro Benguela emprega práticas agrícolas responsáveis, garantindo produtos de qualidade superior enquanto preserva os recursos naturais da região.",
+    "imagens": [
+      "https://images.unsplash.com/photo-1730815048561-45df6f7f331d?w=800",
+      "https://images.unsplash.com/photo-1591382696684-38eb5168d6c8?w=800",
+      "https://images.unsplash.com/photo-1596097635451-f8e0b2c8b6a7?w=800"
+    ],
+    "unidade": "kg",
+    "pesoAproximado": "200-400g por unidade",
+    "origem": {
+      "fazenda": "Agro Benguela",
+      "localizacao": "Catumbela",
+      "provincia": "Benguela"
+    },
+    "produtorInfo": {
+      "nome": "Agro Benguela",
+      "descricao": "Empresa agrícola de médio porte especializada em tubérculos e raízes, operando em Benguela desde 2012 com foco em qualidade e sustentabilidade.",
+      "desde": 2012,
+      "certificacoes": ["Boas Práticas Agrícolas"]
+    },
+    "nutricional": {
+      "calorias": 86,
+      "proteinas": 1.6,
+      "carboidratos": 20.1,
+      "fibras": 3.0,
+      "gorduras": 0.1,
+      "sodio": 55
+    },
+    "conservacao": "Conservar em local fresco, seco e escuro. Não refrigerar, pois o frio pode alterar a textura e o sabor. Manter em caixa ou saco de papel para permitir ventilação. Duração aproximada: 2-3 semanas.",
+    "epocaColheita": ["Abril", "Maio", "Junho", "Julho", "Agosto"],
+    "produtosRelacionados": ["2", "5", "1"],
+    "tags": ["nutritivo", "vitaminas", "versátil", "doce"],
+    "avaliacoes": [
+      {
+        "id": "av3-1",
+        "autor": "Teresa Alves",
+        "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100",
+        "nota": 5,
+        "comentario": "Batatas doces deliciosas! Muito saborosas e frescas. As crianças adoraram.",
+        "data": "2024-12-11T13:40:00Z"
+      },
+      {
+        "id": "av3-2",
+        "autor": "Ricardo Sousa",
+        "nota": 4,
+        "comentario": "Boa qualidade, sabor excelente. Só demoraram um pouco a chegar.",
+        "data": "2024-12-07T09:25:00Z"
+      },
+      {
+        "id": "av3-3",
+        "autor": "Francisca Lima",
+        "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100",
+        "nota": 5,
+        "comentario": "Perfeitas para fazer sobremesas. Muito doces e de óptima qualidade.",
+        "data": "2024-12-04T17:50:00Z"
+      }
+    ],
+    "mediaAvaliacoes": 4.67,
+    "totalAvaliacoes": 3
   },
   {
     "id": 4,
@@ -41,7 +228,75 @@
     "imagem": "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=400",
     "produtor": "Plantação Tropical",
     "provincia": "Uíge",
-    "disponibilidade": "Em stock"
+    "disponibilidade": true,
+    "slug": "banana-prata",
+    "descricaoCompleta": "As bananas prata da Plantação Tropical são cultivadas nas terras férteis do Uíge, beneficiando do clima tropical perfeito para esta fruta. Colhidas no momento ideal de maturação, apresentam um equilíbrio perfeito entre doçura e firmeza, ideal para consumo in natura ou utilização em receitas.\n\nRicas em potássio, vitamina B6 e fibras, as bananas são reconhecidas como uma excelente fonte de energia natural, perfeitas para atletas e para quem busca uma alimentação saudável. Podem ser consumidas ao natural, em vitaminas, panquecas, bolos ou como acompanhamento de cereais.\n\nA Plantação Tropical trabalha com técnicas de cultivo sustentáveis, protegendo a biodiversidade local e garantindo a qualidade superior das frutas. Cada cacho é cuidadosamente seleccionado para chegar à sua mesa no melhor estado possível.",
+    "imagens": [
+      "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=800",
+      "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=800",
+      "https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=800",
+      "https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=800"
+    ],
+    "unidade": "kg",
+    "pesoAproximado": "120-150g por unidade",
+    "origem": {
+      "fazenda": "Plantação Tropical",
+      "localizacao": "Uíge",
+      "provincia": "Uíge"
+    },
+    "produtorInfo": {
+      "nome": "Plantação Tropical",
+      "descricao": "Especializada em frutas tropicais, a Plantação Tropical é referência em qualidade no norte de Angola, trabalhando com mais de 50 famílias de agricultores.",
+      "desde": 2005,
+      "certificacoes": ["Agricultura Sustentável", "Comércio Justo"]
+    },
+    "nutricional": {
+      "calorias": 89,
+      "proteinas": 1.1,
+      "carboidratos": 22.8,
+      "fibras": 2.6,
+      "gorduras": 0.3,
+      "sodio": 1
+    },
+    "conservacao": "Conservar em local fresco e arejado, longe da luz solar directa. Para retardar o amadurecimento, separar as bananas do cacho. Podem ser refrigeradas quando maduras. Duração aproximada: 5-7 dias.",
+    "epocaColheita": ["Todo o ano"],
+    "produtosRelacionados": ["1", "3", "5"],
+    "tags": ["fruta", "energia", "potássio", "tropical"],
+    "avaliacoes": [
+      {
+        "id": "av4-1",
+        "autor": "Miguel Fernandes",
+        "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100",
+        "nota": 5,
+        "comentario": "Bananas excelentes! Muito doces e no ponto certo. Recomendo!",
+        "data": "2024-12-13T08:15:00Z"
+      },
+      {
+        "id": "av4-2",
+        "autor": "Beatriz Martins",
+        "avatar": "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100",
+        "nota": 5,
+        "comentario": "Perfeitas para fazer vitaminas. Chegaram bem embaladas e frescas.",
+        "data": "2024-12-10T14:30:00Z"
+      },
+      {
+        "id": "av4-3",
+        "autor": "António Reis",
+        "nota": 4,
+        "comentario": "Bom produto, mas algumas bananas estavam um pouco verdes.",
+        "data": "2024-12-06T11:20:00Z"
+      },
+      {
+        "id": "av4-4",
+        "autor": "Sandra Pinto",
+        "avatar": "https://images.unsplash.com/photo-1551752800-52d97d10e62f?w=100",
+        "nota": 5,
+        "comentario": "Adorei! As melhores bananas que já comprei online. Muito saborosas.",
+        "data": "2024-12-02T16:45:00Z"
+      }
+    ],
+    "mediaAvaliacoes": 4.75,
+    "totalAvaliacoes": 4
   },
   {
     "id": 5,
@@ -52,7 +307,66 @@
     "imagem": "https://images.unsplash.com/photo-1570586437263-ab629fccc818?w=400",
     "produtor": "Horta do Sul",
     "provincia": "Namibe",
-    "disponibilidade": "Em stock"
+    "disponibilidade": true,
+    "slug": "abobora",
+    "descricaoCompleta": "A abóbora da Horta do Sul é cultivada na província do Namibe, onde o clima e solo proporcionam o desenvolvimento de abóboras de excelente qualidade. Com polpa alaranjada, firme e saborosa, é perfeita para uma grande variedade de preparações culinárias.\n\nRica em betacaroteno, vitamina A e fibras, a abóbora é um alimento nutritivo e versátil. Pode ser utilizada em sopas cremosas, assados, purés, doces tradicionais ou mesmo em receitas mais modernas. É um ingrediente essencial da culinária angolana, presente em diversos pratos regionais.\n\nA Horta do Sul dedica-se à produção de hortaliças de qualidade, trabalhando em harmonia com a natureza e respeitando os ciclos agrícolas tradicionais. Cada abóbora é colhida na maturação ideal para garantir o melhor sabor e textura.",
+    "imagens": [
+      "https://images.unsplash.com/photo-1570586437263-ab629fccc818?w=800",
+      "https://images.unsplash.com/photo-1569976710208-b52636b52c0e?w=800",
+      "https://images.unsplash.com/photo-1600454166196-09a3f6c8c9dd?w=800"
+    ],
+    "unidade": "kg",
+    "pesoAproximado": "1-3kg por unidade",
+    "origem": {
+      "fazenda": "Horta do Sul",
+      "localizacao": "Namibe",
+      "provincia": "Namibe"
+    },
+    "produtorInfo": {
+      "nome": "Horta do Sul",
+      "descricao": "Pequena cooperativa familiar focada em hortaliças tradicionais, operando no Namibe desde 2015 com técnicas de agricultura sustentável.",
+      "desde": 2015,
+      "certificacoes": ["Agricultura Sustentável"]
+    },
+    "nutricional": {
+      "calorias": 26,
+      "proteinas": 1.0,
+      "carboidratos": 6.5,
+      "fibras": 0.5,
+      "gorduras": 0.1,
+      "sodio": 1
+    },
+    "conservacao": "Conservar inteira em local fresco, seco e ventilado. Após cortada, envolver a parte cortada em filme plástico e refrigerar. Duração: 1-2 meses inteira, 5-7 dias após corte.",
+    "epocaColheita": ["Março", "Abril", "Maio", "Junho"],
+    "produtosRelacionados": ["3", "1", "7"],
+    "tags": ["nutritivo", "versátil", "vitamina A", "tradicional"],
+    "avaliacoes": [
+      {
+        "id": "av5-1",
+        "autor": "Helena Rodrigues",
+        "avatar": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100",
+        "nota": 5,
+        "comentario": "Abóbora de excelente qualidade. Fiz sopa e ficou deliciosa!",
+        "data": "2024-12-09T12:30:00Z"
+      },
+      {
+        "id": "av5-2",
+        "autor": "Fernando Costa",
+        "nota": 4,
+        "comentario": "Boa abóbora, bem madura. Óptimo sabor.",
+        "data": "2024-12-05T15:40:00Z"
+      },
+      {
+        "id": "av5-3",
+        "autor": "Carla Baptista",
+        "avatar": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=100",
+        "nota": 5,
+        "comentario": "Produto excelente e preço justo. Muito satisfeita com a compra.",
+        "data": "2024-12-01T10:15:00Z"
+      }
+    ],
+    "mediaAvaliacoes": 4.67,
+    "totalAvaliacoes": 3
   },
   {
     "id": 6,
@@ -63,7 +377,74 @@
     "imagem": "https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=400",
     "produtor": "Sementes do Planalto",
     "provincia": "Huambo",
-    "disponibilidade": "Em stock"
+    "disponibilidade": true,
+    "slug": "feijao-manteiga",
+    "descricaoCompleta": "O feijão manteiga Sementes do Planalto é cultivado nas terras altas do Huambo, conhecidas pela qualidade excepcional dos grãos produzidos. Este feijão de cor creme e textura cremosa é um ingrediente fundamental da cozinha angolana, especialmente no preparo do tradicional calulu.\n\nRico em proteínas vegetais, fibras, ferro e vitaminas do complexo B, o feijão manteiga é um alimento completo e nutritivo. Sua textura amanteigada e sabor suave o tornam ideal para diversos pratos, desde o calulu tradicional até saladas e acompanhamentos modernos.\n\nA Sementes do Planalto trabalha directamente com agricultores familiares do Huambo, garantindo práticas agrícolas sustentáveis e comércio justo. Cada lote de feijão passa por rigorosa selecção para garantir apenas grãos de primeira qualidade, livres de impurezas e com excelente capacidade de cozimento.",
+    "imagens": [
+      "https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=800",
+      "https://images.unsplash.com/photo-1612012961731-6f70c992481e?w=800",
+      "https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=800"
+    ],
+    "unidade": "kg",
+    "pesoAproximado": null,
+    "origem": {
+      "fazenda": "Sementes do Planalto",
+      "localizacao": "Huambo",
+      "provincia": "Huambo"
+    },
+    "produtorInfo": {
+      "nome": "Sementes do Planalto",
+      "descricao": "Cooperativa de agricultores do planalto central de Angola, especializada em leguminosas de qualidade superior desde 2007.",
+      "desde": 2007,
+      "certificacoes": ["Comércio Justo", "Qualidade Premium"]
+    },
+    "nutricional": {
+      "calorias": 333,
+      "proteinas": 21.0,
+      "carboidratos": 60.0,
+      "fibras": 15.5,
+      "gorduras": 1.2,
+      "sodio": 12
+    },
+    "conservacao": "Conservar em recipiente hermético, em local fresco, seco e ao abrigo da luz. Evitar humidade para prevenir fungos. Após cozido, refrigerar e consumir em até 3 dias. Duração (seco): até 1 ano.",
+    "epocaColheita": ["Maio", "Junho", "Julho"],
+    "produtosRelacionados": ["2", "8", "7"],
+    "tags": ["proteína", "tradicional", "calulu", "nutritivo"],
+    "avaliacoes": [
+      {
+        "id": "av6-1",
+        "autor": "Joaquim Santos",
+        "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100",
+        "nota": 5,
+        "comentario": "Feijão de qualidade excepcional! Cozinha muito bem e o sabor é autêntico.",
+        "data": "2024-12-11T09:20:00Z"
+      },
+      {
+        "id": "av6-2",
+        "autor": "Mariana Silva",
+        "avatar": "https://images.unsplash.com/photo-1550928431-ee0ec6db30d3?w=100",
+        "nota": 5,
+        "comentario": "O melhor feijão manteiga que já comprei. Perfeito para calulu!",
+        "data": "2024-12-08T14:50:00Z"
+      },
+      {
+        "id": "av6-3",
+        "autor": "Paulo Ferreira",
+        "nota": 5,
+        "comentario": "Produto de primeira qualidade. Grãos limpos e uniformes. Recomendo!",
+        "data": "2024-12-04T11:30:00Z"
+      },
+      {
+        "id": "av6-4",
+        "autor": "Rosa Lima",
+        "avatar": "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=100",
+        "nota": 4,
+        "comentario": "Muito bom, mas achei o preço um pouco elevado. Vale pela qualidade.",
+        "data": "2024-11-30T16:10:00Z"
+      }
+    ],
+    "mediaAvaliacoes": 4.75,
+    "totalAvaliacoes": 4
   },
   {
     "id": 7,
@@ -74,7 +455,66 @@
     "imagem": "https://images.unsplash.com/photo-1587049352846-4a222e784466?w=400",
     "produtor": "Fazenda Nova Esperança",
     "provincia": "Cunene",
-    "disponibilidade": "Em stock"
+    "disponibilidade": true,
+    "slug": "cebola",
+    "descricaoCompleta": "As cebolas roxas da Fazenda Nova Esperança são cultivadas na província do Cunene, beneficiando das condições climáticas ideais para o desenvolvimento de bulbos de qualidade superior. Com sua coloração roxa intensa e sabor equilibrado, são essenciais na culinária angolana.\n\nA cebola roxa é conhecida pelo seu sabor mais suave e ligeiramente adocicado em comparação com as cebolas brancas, tornando-a perfeita tanto para consumo cru em saladas quanto para refogados e temperos. Rica em antioxidantes, vitamina C e compostos anti-inflamatórios, é um ingrediente que além de saboroso, traz benefícios à saúde.\n\nA Fazenda Nova Esperança dedica-se à produção sustentável de hortaliças, empregando técnicas que preservam a fertilidade do solo e a qualidade da água. Cada cebola é cuidadosamente seleccionada, garantindo firmeza, ausência de danos e máximo frescor.",
+    "imagens": [
+      "https://images.unsplash.com/photo-1587049352846-4a222e784466?w=800",
+      "https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=800",
+      "https://images.unsplash.com/photo-1508313880040-c5ce3b882f3f?w=800"
+    ],
+    "unidade": "kg",
+    "pesoAproximado": "150-250g por unidade",
+    "origem": {
+      "fazenda": "Fazenda Nova Esperança",
+      "localizacao": "Ondjiva",
+      "provincia": "Cunene"
+    },
+    "produtorInfo": {
+      "nome": "Fazenda Nova Esperança",
+      "descricao": "Produtora familiar do sul de Angola, especializada em cebolas e alhos de qualidade premium, operando desde 2011.",
+      "desde": 2011,
+      "certificacoes": ["Boas Práticas Agrícolas"]
+    },
+    "nutricional": {
+      "calorias": 40,
+      "proteinas": 1.1,
+      "carboidratos": 9.3,
+      "fibras": 1.7,
+      "gorduras": 0.1,
+      "sodio": 4
+    },
+    "conservacao": "Conservar em local fresco, seco e bem ventilado, longe da luz solar directa. Não refrigerar. Manter em rede ou cesto que permita circulação de ar. Duração aproximada: 3-4 semanas.",
+    "epocaColheita": ["Junho", "Julho", "Agosto", "Setembro"],
+    "produtosRelacionados": ["1", "5", "6"],
+    "tags": ["tempero", "roxo", "versátil", "antioxidante"],
+    "avaliacoes": [
+      {
+        "id": "av7-1",
+        "autor": "Amélia Santos",
+        "avatar": "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=100",
+        "nota": 5,
+        "comentario": "Cebolas frescas e de óptima qualidade. Muito saborosas!",
+        "data": "2024-12-12T10:45:00Z"
+      },
+      {
+        "id": "av7-2",
+        "autor": "Tomás Pereira",
+        "nota": 4,
+        "comentario": "Bom produto, mas algumas cebolas vieram pequenas.",
+        "data": "2024-12-07T13:20:00Z"
+      },
+      {
+        "id": "av7-3",
+        "autor": "Luísa Gonçalves",
+        "avatar": "https://images.unsplash.com/photo-1498529605908-f357a9af7bf5?w=100",
+        "nota": 5,
+        "comentario": "Excelentes! Uso em todas as minhas receitas. Sabor autêntico.",
+        "data": "2024-12-03T16:30:00Z"
+      }
+    ],
+    "mediaAvaliacoes": 4.67,
+    "totalAvaliacoes": 3
   },
   {
     "id": 8,
@@ -85,6 +525,73 @@
     "imagem": "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400",
     "produtor": "Cooperativa do Norte",
     "provincia": "Zaire",
-    "disponibilidade": "Em stock"
+    "disponibilidade": true,
+    "slug": "milho",
+    "descricaoCompleta": "O milho amarelo da Cooperativa do Norte é cultivado nas terras férteis da província do Zaire, uma das principais regiões produtoras de cereais de Angola. Com grãos dourados, suculentos e cheios de sabor, este milho é perfeito tanto para consumo fresco quanto para transformação em fuba.\n\nO milho é um alimento fundamental na dieta angolana, sendo usado em diversas preparações tradicionais. Pode ser consumido cozido, assado, em caldos, ou moído para fazer a fuba que é a base de muitos pratos típicos. Rico em carboidratos, fibras e vitaminas do complexo B, é uma excelente fonte de energia.\n\nA Cooperativa do Norte reúne dezenas de pequenos agricultores da região, promovendo práticas agrícolas sustentáveis e garantindo rendimento justo aos produtores. Cada espiga de milho é cuidadosamente seleccionada para garantir grãos uniformes, cheios e sem defeitos.",
+    "imagens": [
+      "https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=800",
+      "https://images.unsplash.com/photo-1603048588665-791ca8aea617?w=800",
+      "https://images.unsplash.com/photo-1559411676-3cb33f0d2e8e?w=800"
+    ],
+    "unidade": "kg",
+    "pesoAproximado": "200-300g por espiga",
+    "origem": {
+      "fazenda": "Cooperativa do Norte",
+      "localizacao": "Mbanza Congo",
+      "provincia": "Zaire"
+    },
+    "produtorInfo": {
+      "nome": "Cooperativa do Norte",
+      "descricao": "Grande cooperativa que agrupa mais de 300 agricultores do Zaire e Uíge, especializada em cereais e grãos desde 2006.",
+      "desde": 2006,
+      "certificacoes": ["Comércio Justo", "Agricultura Familiar"]
+    },
+    "nutricional": {
+      "calorias": 86,
+      "proteinas": 3.2,
+      "carboidratos": 18.7,
+      "fibras": 2.0,
+      "gorduras": 1.2,
+      "sodio": 15
+    },
+    "conservacao": "Conservar com casca em local fresco. Para maior durabilidade, refrigerar em saco plástico perfurado. Sem casca, consumir em 1-2 dias ou congelar. Duração aproximada: 3-5 dias (com casca).",
+    "epocaColheita": ["Março", "Abril", "Maio"],
+    "produtosRelacionados": ["2", "6", "3"],
+    "tags": ["cereal", "fuba", "tradicional", "energia"],
+    "avaliacoes": [
+      {
+        "id": "av8-1",
+        "autor": "Gabriel Tavares",
+        "avatar": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=100",
+        "nota": 5,
+        "comentario": "Milho fresco e muito saboroso. Perfeito para fuba!",
+        "data": "2024-12-10T11:25:00Z"
+      },
+      {
+        "id": "av8-2",
+        "autor": "Cristina Lopes",
+        "avatar": "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=100",
+        "nota": 5,
+        "comentario": "Excelente qualidade! As espigas chegaram bem cheias e frescas.",
+        "data": "2024-12-06T15:40:00Z"
+      },
+      {
+        "id": "av8-3",
+        "autor": "Mário Andrade",
+        "nota": 4,
+        "comentario": "Bom milho, sabor autêntico. Só esperava espigas um pouco maiores.",
+        "data": "2024-12-02T09:50:00Z"
+      },
+      {
+        "id": "av8-4",
+        "autor": "Júlia Mendes",
+        "avatar": "https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=100",
+        "nota": 5,
+        "comentario": "Produto de primeira! Cozinhei e as crianças adoraram. Muito doce.",
+        "data": "2024-11-28T13:15:00Z"
+      }
+    ],
+    "mediaAvaliacoes": 4.75,
+    "totalAvaliacoes": 4
   }
 ]
