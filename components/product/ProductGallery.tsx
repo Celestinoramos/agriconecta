@@ -3,10 +3,9 @@
 import { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import useEmblaCarousel from 'embla-carousel-react';
-import { Dialog, DialogContent, DialogClose } from '@/components/ui/dialog';
-import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 
 interface ProductGalleryProps {
   images: string[];

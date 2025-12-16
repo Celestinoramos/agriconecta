@@ -16,14 +16,14 @@ import { ArrowLeft } from 'lucide-react';
 
 // Generate static params for all products
 export async function generateStaticParams() {
-  return produtos.map((p: any) => ({
+  return produtos.map((p) => ({
     slug: p.slug,
   }));
 }
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const produto = produtos.find((p: any) => p.slug === params.slug) as ProdutoDetalhado | undefined;
+  const produto = produtos.find((p) => p.slug === params.slug) as ProdutoDetalhado | undefined;
   
   if (!produto) {
     return {
@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default function ProductPage({ params }: { params: { slug: string } }) {
-  const produto = produtos.find((p: any) => p.slug === params.slug) as ProdutoDetalhado | undefined;
+  const produto = produtos.find((p) => p.slug === params.slug) as ProdutoDetalhado | undefined;
 
   if (!produto) {
     notFound();
@@ -70,16 +70,16 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
   // Get related products
   const relatedProducts = produto.produtosRelacionados
-    .map((id) => produtos.find((p: any) => String(p.id) === String(id)))
+    .map((id) => produtos.find((p) => String(p.id) === String(id)))
     .filter(Boolean)
     .slice(0, 4)
-    .map((p: any) => ({
-      id: p.id,
-      nome: p.nome,
-      preco: p.preco,
-      imagem: p.imagem,
-      slug: p.slug,
-      categoria: p.categoria,
+    .map((p) => ({
+      id: p!.id,
+      nome: p!.nome,
+      preco: p!.preco,
+      imagem: p!.imagem,
+      slug: p!.slug,
+      categoria: p!.categoria,
     }));
 
   // Generate structured data for SEO
@@ -115,9 +115,10 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      {/* JSON-LD Structured Data */}
+      {/* JSON-LD Structured Data - Safe as we control the data source */}
       <script
         type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
       />
 

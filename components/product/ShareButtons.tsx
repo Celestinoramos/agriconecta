@@ -35,7 +35,8 @@ export default function ShareButtons({ productName, productUrl }: ShareButtonsPr
       setTimeout(() => {
         setCopied(false);
       }, 2000);
-    } catch (error) {
+    } catch (err) {
+      console.error('Failed to copy link:', err);
       toast.error('Erro ao copiar link', {
         description: 'Não foi possível copiar o link. Tente novamente.'
       });

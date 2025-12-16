@@ -43,7 +43,6 @@ export default function QuantitySelector({
     
     // Allow empty input for editing
     if (value === '') {
-      setQuantity(minQuantity);
       return;
     }
 
