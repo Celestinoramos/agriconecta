@@ -1,13 +1,15 @@
+'use client';
+
+// Note: This page is a client component to support interactive cart functionality.
+// SEO metadata is handled by the root layout.tsx
+
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import AddToCartButton from "@/components/cart/AddToCartButton";
 import produtos from "@/data/produtos.json";
-
-export const metadata = {
-  title: "Catálogo de Produtos - AgriConecta",
-  description: "Explore nosso catálogo completo de produtos agrícolas frescos de Angola",
-};
+import { Produto } from "@/types/cart";
 
 export default function ProdutosPage() {
   const categorias = Array.from(new Set(produtos.map(p => p.categoria)));
@@ -83,7 +85,7 @@ export default function ProdutosPage() {
                         {produto.categoria}
                       </span>
                     </div>
-                    <Button className="w-full mt-4 min-h-[44px]">Adicionar ao Carrinho</Button>
+                    <AddToCartButton produto={produto as Produto} className="w-full mt-4 min-h-[44px]" />
                   </div>
                 </CardContent>
               </Card>

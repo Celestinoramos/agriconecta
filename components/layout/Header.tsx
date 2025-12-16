@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import CartIcon from '@/components/cart/CartIcon';
 
 const navLinks = [
   { href: '/', label: 'Início' },
@@ -35,22 +36,26 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
+            <CartIcon />
           </nav>
 
-          {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden min-h-[44px] min-w-[44px]"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Menu de navegação"
-          >
-            {mobileMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </Button>
+          {/* Mobile: Cart Icon + Menu Button */}
+          <div className="flex items-center gap-2 md:hidden">
+            <CartIcon />
+            <Button
+              variant="ghost"
+              size="icon"
+              className="min-h-[44px] min-w-[44px]"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Menu de navegação"
+            >
+              {mobileMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </Button>
+          </div>
         </div>
       </div>
 
