@@ -114,8 +114,8 @@ export default function CheckoutForm() {
       // Show success message
       toast.success('Pedido criado com sucesso!');
 
-      // Redirect to order confirmation page
-      router.push(`/pedido/${result.pedidoId}`);
+      // Redirect to order tracking page
+      router.push(`/pedido/${result.pedidoId}/rastreio`);
     } catch (error) {
       console.error('Erro no checkout:', error);
       
