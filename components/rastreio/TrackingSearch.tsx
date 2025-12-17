@@ -33,7 +33,7 @@ export default function TrackingSearch() {
       const data = await response.json();
       
       // Redirect to tracking page
-      router.push(`/pedido/${data.pedido.id}/rastreio`);
+      router.push(`/pedido/${data.id}/rastreio`);
     } catch (error) {
       console.error('Erro ao buscar pedido:', error);
       toast.error('Código de rastreio inválido');

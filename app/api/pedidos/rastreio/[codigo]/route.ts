@@ -17,6 +17,7 @@ export async function GET(
     
     // Retornar apenas dados públicos para rastreio
     return NextResponse.json({
+      id: pedido.id,
       numero: pedido.numero,
       estado: pedido.estado,
       estadoHistorico: pedido.estadoHistorico,

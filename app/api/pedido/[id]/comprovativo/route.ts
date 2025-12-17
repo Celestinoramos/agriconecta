@@ -58,10 +58,11 @@ export async function POST(
       await mkdir(UPLOAD_DIR, { recursive: true });
     }
 
-    // Generate unique filename
+    // Generate unique filename with sanitized order number
     const timestamp = Date.now();
     const extension = file.name.split('.').pop();
-    const filename = `comprovativo-${pedido.numero}-${timestamp}.${extension}`;
+    const sanitizedNumero = pedido.numero.replace(/[^a-zA-Z0-9-]/g, '_');
+    const filename = `comprovativo-${sanitizedNumero}-${timestamp}.${extension}`;
     const filepath = join(UPLOAD_DIR, filename);
 
     // Save file
