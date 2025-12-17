@@ -52,13 +52,13 @@ export interface CriarPedidoDTO {
     produtoUnidade?: string;
     quantidade: number;
   }[];
-  metodoPagamento: 'MULTICAIXA_EXPRESS' | 'TRANSFERENCIA_BANCARIA';
+  metodoPagamento: MetodoPagamento;
   notasCliente?: string;
   userId?: string;
 }
 
 export interface ActualizarEstadoDTO {
-  estado: 'PENDENTE' | 'PAGO' | 'EM_PREPARACAO' | 'EM_TRANSITO' | 'ENTREGUE' | 'CANCELADO';
+  estado: EstadoPedido;
   nota?: string;
   criadoPor?: string;
 }
