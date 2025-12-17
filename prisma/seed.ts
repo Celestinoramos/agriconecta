@@ -40,13 +40,13 @@ async function main() {
       clienteNome: 'Utilizador Teste',
       clienteEmail: 'teste@agriconecta.ao',
       clienteTelefone: '244923456789',
-      enderecoEntrega: {
+      enderecoEntrega: JSON.stringify({
         rua: 'Rua da Missão, 123',
         bairro: 'Maianga',
         municipio: 'Luanda',
         provincia: 'Luanda',
         referencia: 'Próximo ao mercado',
-      },
+      }),
       metodoPagamento: 'TRANSFERENCIA_BANCARIA',
       subtotal: 10500,
       taxaEntrega: 500,

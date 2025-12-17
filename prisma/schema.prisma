@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -60,24 +60,25 @@ model Pedido {
   clienteTelefone String
   
   // Endereço de entrega (snapshot JSON)
-  enderecoEntrega Json
+  enderecoEntrega String          // JSON armazenado como String para compatibilidade SQLite
   
   // Itens do pedido
   itens           ItemPedido[]
   
-  // Valores monetários (em AOA, armazenados como Decimal para precisão)
-  subtotal        Decimal         @db.Decimal(12, 2)
-  taxaEntrega     Decimal         @default(0) @db.Decimal(12, 2)
-  desconto        Decimal         @default(0) @db.Decimal(12, 2)
-  total           Decimal         @db.Decimal(12, 2)
+  // Valores monetários (em AOA)
+  // Usar Float em vez de Decimal para compatibilidade SQLite
+  subtotal        Float
+  taxaEntrega     Float           @default(0)
+  desconto        Float           @default(0)
+  total           Float
   
   // Pagamento
-  metodoPagamento MetodoPagamento
+  metodoPagamento String          // Enum como String para compatibilidade
   referenciaPagamento String?     // Referência Multicaixa ou bancária
   comprovativoUrl String?         // URL do comprovativo (se upload)
   
   // Estado actual
-  estado          EstadoPedido    @default(PENDENTE)
+  estado          String          @default("PENDENTE") // Enum como String
   estadoHistorico EstadoHistorico[]
   
   // Fatura
@@ -118,12 +119,12 @@ model ItemPedido {
   produtoId    String
   produtoSlug  String
   produtoNome  String
-  produtoPreco Decimal @db.Decimal(12, 2)
+  produtoPreco Float   // Float em vez de Decimal
   produtoImagem String?
   produtoUnidade String @default("unidade")
   
   quantidade   Int
-  subtotal     Decimal @db.Decimal(12, 2)
+  subtotal     Float   // Float em vez de Decimal
   
   @@index([pedidoId])
 }
@@ -133,7 +134,7 @@ model EstadoHistorico {
   pedidoId  String
   pedido    Pedido       @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
   
-  estado    EstadoPedido
+  estado    String       // Enum como String
   nota      String?      // Nota opcional sobre a mudança de estado
   criadoPor String?      // ID do admin ou "sistema"
   
@@ -143,17 +144,5 @@ model EstadoHistorico {
 }
 
 // ==================== ENUMS ====================
-
-enum EstadoPedido {
-  PENDENTE        // Aguardando pagamento
-  PAGO            // Pagamento confirmado
-  EM_PREPARACAO   // Pedido a ser preparado
-  EM_TRANSITO     // Pedido enviado/em entrega
-  ENTREGUE        // Pedido entregue
-  CANCELADO       // Pedido cancelado
-}
-
-enum MetodoPagamento {
-  MULTICAIXA_EXPRESS
-  TRANSFERENCIA_BANCARIA
-}
+// Nota: SQLite não suporta enums nativos, então removemos as definições de enum
+// Os valores são armazenados como strings e validados na aplicação

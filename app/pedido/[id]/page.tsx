@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { obterPedidoPorId } from '@/lib/db/pedidos';
 import { formatarPreco } from '@/lib/cart';
 import { gerarQRCodePagamento } from '@/lib/qrcode';
+import { parseEnderecoEntrega } from '@/types/pedido';
 import PaymentInstructions from '@/components/checkout/PaymentInstructions';
 import UploadComprovativo from '@/components/checkout/UploadComprovativo';
 
@@ -42,7 +43,7 @@ export default async function PedidoPage({ params }: PageProps) {
     console.error('Erro ao gerar QR Code:', error);
   }
 
-  const enderecoEntrega = pedido.enderecoEntrega as Record<string, any>;
+  const enderecoEntrega = parseEnderecoEntrega(pedido.enderecoEntrega);
 
   return (
     <main className="min-h-screen bg-gray-50">

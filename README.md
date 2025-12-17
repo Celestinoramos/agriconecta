@@ -12,23 +12,56 @@ AgriConecta é uma plataforma que permite aos consumidores angolanos comprar pro
 - **TypeScript** - Tipagem estática
 - **Tailwind CSS** - Estilização
 - **Radix UI** - Componentes acessíveis
+- **Prisma** - ORM para base de dados
+- **SQLite** - Base de dados local para desenvolvimento
 - **PWA Ready** - Progressive Web App
+
+### Base de Dados
+
+O projeto está configurado para usar **SQLite** por padrão para desenvolvimento local, o que permite desenvolvimento fácil sem necessidade de configurar uma base de dados externa.
+
+Para produção, recomenda-se usar **PostgreSQL** (por exemplo, Neon). Para mudar para PostgreSQL, altere o `provider` no `prisma/schema.prisma` de `"sqlite"` para `"postgresql"` e atualize a `DATABASE_URL` no `.env`.
 
 ## Instalação e Execução
 
-### Instalar Dependências
+### 1. Instalar dependências
 
 ```bash
 npm install
 ```
 
-### Modo de Desenvolvimento
+### 2. Configurar base de dados local
+
+```bash
+npm run db:setup
+```
+
+Este comando irá:
+- Gerar o cliente Prisma
+- Criar a base de dados SQLite local
+- Popular com dados de teste
+
+### 3. Iniciar servidor de desenvolvimento
 
 ```bash
 npm run dev
 ```
 
 O servidor estará disponível em [http://localhost:3000](http://localhost:3000)
+
+### 4. (Opcional) Visualizar base de dados
+
+```bash
+npm run db:studio
+```
+
+### Comandos úteis
+
+- `npm run db:reset` - Limpar e recriar base de dados
+- `npm run db:seed` - Popular com dados de teste
+- `npm run db:studio` - Abrir interface visual da BD
+- `npm run db:generate` - Gerar cliente Prisma
+- `npm run db:push` - Sincronizar schema com base de dados
 
 ### Build de Produção
 
