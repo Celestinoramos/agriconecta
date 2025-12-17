@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, ShoppingBag, Briefcase } from 'lucide-react';
+import { Home, ShoppingBag, Briefcase, Truck } from 'lucide-react';
 
 const navItems = [
   {
@@ -14,6 +14,11 @@ const navItems = [
     href: '/produtos',
     label: 'Produtos',
     icon: ShoppingBag,
+  },
+  {
+    href: '/rastreio',
+    label: 'Rastreio',
+    icon: Truck,
   },
   {
     href: '/servicos',
