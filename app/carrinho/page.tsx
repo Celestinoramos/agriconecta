@@ -272,7 +272,11 @@ export default function CarrinhoPage() {
                     </div>
 
                     <div className="space-y-3">
-                      <WhatsAppButton className="w-full" size="lg" />
+                      <Button asChild className="w-full" size="lg">
+                        <Link href="/checkout">Finalizar Compra</Link>
+                      </Button>
+                      
+                      <WhatsAppButton className="w-full" size="lg" variant="outline" />
                       
                       <Button
                         variant="outline"
@@ -293,8 +297,19 @@ export default function CarrinhoPage() {
 
                     <div className="mt-6 p-4 bg-green-50 rounded-lg">
                       <p className="text-sm text-gray-700">
-                        💬 Ao finalizar via WhatsApp, você receberá confirmação do vendedor com detalhes de entrega e pagamento.
+                        💳 Finalize a compra para efectuar o pagamento por transferência bancária.
                       </p>
+                    </div>
+
+                    <div className="mt-3">
+                      <Link 
+                        href="https://wa.me/244923456789"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-center text-gray-600 hover:text-gray-800 block"
+                      >
+                        Prefere encomendar via WhatsApp?
+                      </Link>
                     </div>
                   </CardContent>
                 </Card>

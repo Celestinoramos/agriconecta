@@ -123,6 +123,22 @@ export function CartProvider({ children }: CartProviderProps) {
     setItems([]);
   };
 
+  const getCartForCheckout = () => {
+    return items.map(item => ({
+      produtoId: String(item.produto.id),
+      produtoSlug: item.produto.categoria?.toLowerCase() || 'produto',
+      produtoNome: item.produto.nome,
+      produtoPreco: item.produto.preco,
+      produtoImagem: item.produto.imagem,
+      produtoUnidade: 'unidade',
+      quantidade: item.quantidade,
+    }));
+  };
+
+  const clearCartAfterPurchase = () => {
+    clearCart();
+  };
+
   const total = calcularTotal(items);
   const itemCount = calcularItemCount(items);
 
@@ -134,6 +150,8 @@ export function CartProvider({ children }: CartProviderProps) {
     removeItem,
     updateQuantity,
     clearCart,
+    getCartForCheckout,
+    clearCartAfterPurchase,
     isDrawerOpen,
     setIsDrawerOpen,
   };
