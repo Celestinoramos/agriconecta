@@ -137,7 +137,8 @@ export async function obterPedidoPorNumero(numero: string) {
 }
 
 export async function obterPedidoPorCodigoRastreio(codigoRastreio: string) {
-  return prisma.pedido.findUnique({
+  // Try to find by tracking code first
+  let pedido = await prisma.pedido.findUnique({
     where: { codigoRastreio },
     include: {
       itens: true,
@@ -146,6 +147,21 @@ export async function obterPedidoPorCodigoRastreio(codigoRastreio: string) {
       },
     },
   });
+  
+  // If not found, try by order number
+  if (!pedido) {
+    pedido = await prisma.pedido.findUnique({
+      where: { numero: codigoRastreio },
+      include: {
+        itens: true,
+        estadoHistorico: {
+          orderBy: { criadoEm: 'asc' },
+        },
+      },
+    });
+  }
+  
+  return pedido;
 }
 
 export async function listarPedidosDoUsuario(userId: string) {
