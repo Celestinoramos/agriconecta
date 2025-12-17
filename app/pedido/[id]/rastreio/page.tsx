@@ -1,18 +1,21 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Metadata } from 'next';
-import { Package, MapPin, Phone } from 'lucide-react';
+import { Package, Phone, Download, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { obterPedidoPorId } from '@/lib/db/pedidos';
-import { formatarPreco } from '@/lib/cart';
 import { parseEnderecoEntrega, EstadoPedido } from '@/types/pedido';
 import TrackingTimeline from '@/components/rastreio/TrackingTimeline';
+import TrackingStatus from '@/components/rastreio/TrackingStatus';
+import OrderDetails from '@/components/rastreio/OrderDetails';
+import DeliveryAddress from '@/components/rastreio/DeliveryAddress';
+import PaymentInfo from '@/components/rastreio/PaymentInfo';
 
 export const metadata: Metadata = {
-  title: 'Rastreio do Pedido - AgriConecta',
-  description: 'Acompanhe o estado do seu pedido',
+  title: 'Rastreio do Pedido | AgriConecta',
+  description: 'Acompanhe o estado do seu pedido no AgriConecta',
+  robots: 'noindex',
 };
 
 interface PageProps {
@@ -29,17 +32,40 @@ export default async function RastreioPage({ params }: PageProps) {
   }
 
   const enderecoEntrega = parseEnderecoEntrega(pedido.enderecoEntrega);
+  const estadoActual = pedido.estado as EstadoPedido;
+  const estadoActualHistorico = pedido.estadoHistorico.find(h => h.estado === estadoActual);
+
+  // WhatsApp link with pre-filled message
+  const WHATSAPP_NUMERO = '244937321982';
+  const mensagemWhatsApp = `Olá! Tenho uma dúvida sobre o meu pedido ${pedido.numero}.`;
+  const whatsappLink = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagemWhatsApp)}`;
 
   return (
     <main className="min-h-screen bg-gray-50">
       {/* Header */}
       <section className="bg-green-600 text-white py-6 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex items-center gap-3 mb-3">
-            <Package className="h-8 w-8" />
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center gap-4 mb-3">
+            <Button asChild variant="ghost" size="sm" className="text-white hover:bg-green-700">
+              <Link href="/">
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Voltar
+              </Link>
+            </Button>
+          </div>
+          <div className="flex items-center gap-3">
+            <Package className="h-10 w-10" />
             <div>
-              <h1 className="text-2xl font-bold">Rastreio do Pedido</h1>
-              <p className="text-green-100 text-sm">{pedido.numero}</p>
+              <h1 className="text-3xl font-bold">Pedido {pedido.numero}</h1>
+              <p className="text-green-100 text-sm">
+                Criado em {new Date(pedido.criadoEm).toLocaleDateString('pt-AO', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </p>
             </div>
           </div>
         </div>
@@ -47,17 +73,22 @@ export default async function RastreioPage({ params }: PageProps) {
 
       {/* Content */}
       <section className="py-8 px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto space-y-6">
+          {/* Current Status - Prominent Display */}
+          <TrackingStatus 
+            estado={estadoActual} 
+            nota={estadoActualHistorico?.nota || undefined}
+          />
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Left Column - Timeline */}
-            <div className="lg:col-span-2">
+            {/* Left Column - Timeline and Details */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Timeline */}
               <Card>
-                <CardHeader>
-                  <CardTitle>Estado do Pedido</CardTitle>
-                </CardHeader>
-                <CardContent>
+                <CardContent className="p-6">
+                  <h2 className="text-xl font-bold mb-6">Histórico do Pedido</h2>
                   <TrackingTimeline
-                    estadoActual={pedido.estado as EstadoPedido}
+                    estadoActual={estadoActual}
                     estadoHistorico={pedido.estadoHistorico.map(h => ({
                       estado: h.estado as EstadoPedido,
                       criadoEm: h.criadoEm,
@@ -66,107 +97,78 @@ export default async function RastreioPage({ params }: PageProps) {
                   />
                 </CardContent>
               </Card>
+
+              {/* Order Details */}
+              <OrderDetails
+                itens={pedido.itens.map(item => ({
+                  id: item.id,
+                  produtoNome: item.produtoNome,
+                  produtoImagem: item.produtoImagem,
+                  produtoUnidade: item.produtoUnidade,
+                  quantidade: item.quantidade,
+                  produtoPreco: Number(item.produtoPreco),
+                  subtotal: Number(item.subtotal),
+                }))}
+                subtotal={Number(pedido.subtotal)}
+                taxaEntrega={Number(pedido.taxaEntrega)}
+                desconto={Number(pedido.desconto)}
+                total={Number(pedido.total)}
+                metodoPagamento={pedido.metodoPagamento}
+              />
             </div>
 
-            {/* Right Column - Details */}
+            {/* Right Column - Sidebar */}
             <div className="space-y-6">
-              {/* Order Info */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Informações do Pedido</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3 text-sm">
-                  <div>
-                    <p className="text-gray-600">Número do Pedido</p>
-                    <p className="font-semibold">{pedido.numero}</p>
-                  </div>
-                  <div>
-                    <p className="text-gray-600">Total</p>
-                    <p className="font-semibold text-green-600">
-                      {formatarPreco(Number(pedido.total))}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-gray-600">Data do Pedido</p>
-                    <p className="font-semibold">
-                      {new Date(pedido.criadoEm).toLocaleDateString('pt-AO')}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-gray-600">Método de Pagamento</p>
-                    <p className="font-semibold">Transferência Bancária</p>
-                  </div>
-                </CardContent>
-              </Card>
+              {/* Payment Info - Only if PENDENTE */}
+              {estadoActual === 'PENDENTE' && (
+                <PaymentInfo
+                  total={Number(pedido.total)}
+                  numeroPedido={pedido.numero}
+                  pedidoId={pedido.id}
+                />
+              )}
 
               {/* Delivery Address */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base flex items-center gap-2">
-                    <MapPin className="h-4 w-4" />
-                    Endereço de Entrega
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-1 text-sm">
-                  <p className="font-medium">{pedido.clienteNome}</p>
-                  <p>{enderecoEntrega.rua}</p>
-                  <p>{enderecoEntrega.bairro}</p>
-                  <p>{enderecoEntrega.municipio}, {enderecoEntrega.provincia}</p>
-                  {enderecoEntrega.referencia && (
-                    <p className="text-gray-600 text-xs mt-2">
-                      Ref: {enderecoEntrega.referencia}
-                    </p>
-                  )}
-                </CardContent>
-              </Card>
+              <DeliveryAddress
+                clienteNome={pedido.clienteNome}
+                rua={enderecoEntrega.rua}
+                bairro={enderecoEntrega.bairro}
+                municipio={enderecoEntrega.municipio}
+                provincia={enderecoEntrega.provincia}
+                referencia={enderecoEntrega.referencia}
+              />
 
-              {/* Items Summary */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-base">Itens do Pedido</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  {pedido.itens.map((item) => (
-                    <div key={item.id} className="flex gap-3">
-                      {item.produtoImagem && (
-                        <div className="relative w-12 h-12 flex-shrink-0 bg-gray-200 rounded overflow-hidden">
-                          <Image
-                            src={item.produtoImagem}
-                            alt={item.produtoNome}
-                            fill
-                            className="object-cover"
-                            sizes="48px"
-                          />
-                        </div>
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium truncate">{item.produtoNome}</p>
-                        <p className="text-xs text-gray-600">
-                          Qtd: {item.quantidade}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </CardContent>
-              </Card>
+              {/* Invoice Download - Only if generated */}
+              {pedido.faturaUrl && (
+                <Card>
+                  <CardContent className="p-4">
+                    <Button asChild variant="outline" className="w-full">
+                      <a href={pedido.faturaUrl} download>
+                        <Download className="h-4 w-4 mr-2" />
+                        Descarregar Fatura
+                      </a>
+                    </Button>
+                  </CardContent>
+                </Card>
+              )}
 
-              {/* Contact */}
+              {/* WhatsApp Contact */}
               <Card className="bg-green-50 border-green-200">
                 <CardContent className="p-4">
                   <div className="flex items-start gap-3">
-                    <Phone className="h-5 w-5 text-green-600 mt-0.5" />
-                    <div className="text-sm">
+                    <Phone className="h-5 w-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <div className="text-sm flex-1">
                       <p className="font-medium text-green-900 mb-1">Dúvidas sobre o pedido?</p>
-                      <p className="text-green-700 text-xs mb-2">
+                      <p className="text-green-700 text-xs mb-3">
                         Entre em contacto connosco via WhatsApp
                       </p>
-                      <Button asChild size="sm" variant="outline" className="text-xs">
+                      <Button asChild size="sm" className="w-full">
                         <a
-                          href="https://wa.me/244923456789"
+                          href={whatsappLink}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
-                          Contactar Suporte
+                          💬 WhatsApp
                         </a>
                       </Button>
                     </div>
@@ -174,7 +176,7 @@ export default async function RastreioPage({ params }: PageProps) {
                 </CardContent>
               </Card>
 
-              {/* Actions */}
+              {/* Additional Actions */}
               <div className="space-y-2">
                 <Button asChild variant="outline" className="w-full">
                   <Link href={`/pedido/${pedido.id}`}>
