@@ -1,6 +1,6 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
-import { Pedido, ItemPedido } from '@/types/pedido';
+import { Pedido, ItemPedido, parseEnderecoEntrega } from '@/types/pedido';
 
 // Create styles
 const styles = StyleSheet.create({
@@ -137,7 +137,7 @@ interface FaturaPDFProps {
 }
 
 const FaturaPDF: React.FC<FaturaPDFProps> = ({ pedido, qrCodeUrl }) => {
-  const enderecoEntrega = pedido.enderecoEntrega as Record<string, any>;
+  const enderecoEntrega = parseEnderecoEntrega(pedido.enderecoEntrega);
   const dataEmissao = pedido.faturaGeradaEm 
     ? new Date(pedido.faturaGeradaEm).toLocaleDateString('pt-AO')
     : new Date().toLocaleDateString('pt-AO');
