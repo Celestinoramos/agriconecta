@@ -1,6 +1,5 @@
 import prisma from '@/lib/prisma';
 import { CriarPedidoDTO, ActualizarEstadoDTO, EstadoPedido } from '@/types/pedido';
-import { Decimal } from '@prisma/client/runtime/library';
 
 // Constantes de configuração
 const TAXA_ENTREGA_PADRAO = 0; // Pode ser calculado baseado na localização
@@ -75,23 +74,24 @@ export async function criarPedido(dados: CriarPedidoDTO) {
       clienteNome: dados.clienteNome,
       clienteEmail: dados.clienteEmail,
       clienteTelefone: dados.clienteTelefone,
-      enderecoEntrega: dados.enderecoEntrega,
+      enderecoEntrega: JSON.stringify(dados.enderecoEntrega), // Stringify para SQLite
       metodoPagamento: dados.metodoPagamento,
       notasCliente: dados.notasCliente,
-      subtotal: new Decimal(subtotal),
-      taxaEntrega: new Decimal(taxaEntrega),
-      desconto: new Decimal(desconto),
-      total: new Decimal(total),
+      subtotal,
+      taxaEntrega,
+      desconto,
+      total,
+      estado: 'PENDENTE',
       itens: {
         create: itensComSubtotal.map(item => ({
           produtoId: item.produtoId,
           produtoSlug: item.produtoSlug,
           produtoNome: item.produtoNome,
-          produtoPreco: new Decimal(item.produtoPreco),
+          produtoPreco: item.produtoPreco,
           produtoImagem: item.produtoImagem,
           produtoUnidade: item.produtoUnidade || 'unidade',
           quantidade: item.quantidade,
-          subtotal: new Decimal(item.subtotal),
+          subtotal: item.subtotal,
         })),
       },
       estadoHistorico: {
