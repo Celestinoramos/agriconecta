@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { obterPedidoPorId } from '@/lib/db/pedidos';
 import { formatarPreco } from '@/lib/cart';
+import { parseEnderecoEntrega } from '@/types/pedido';
 import TrackingTimeline from '@/components/rastreio/TrackingTimeline';
 
 export const metadata: Metadata = {
@@ -27,7 +28,7 @@ export default async function RastreioPage({ params }: PageProps) {
     notFound();
   }
 
-  const enderecoEntrega = pedido.enderecoEntrega as Record<string, any>;
+  const enderecoEntrega = parseEnderecoEntrega(pedido.enderecoEntrega);
 
   return (
     <main className="min-h-screen bg-gray-50">
