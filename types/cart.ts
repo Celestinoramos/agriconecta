@@ -27,6 +27,16 @@ export interface CartContextType {
   removeItem: (produtoId: string | number) => void;
   updateQuantity: (produtoId: string | number, quantidade: number) => void;
   clearCart: () => void;
+  getCartForCheckout: () => {
+    produtoId: string;
+    produtoSlug: string;
+    produtoNome: string;
+    produtoPreco: number;
+    produtoImagem?: string;
+    produtoUnidade: string;
+    quantidade: number;
+  }[];
+  clearCartAfterPurchase: () => void;
   isDrawerOpen: boolean;
   setIsDrawerOpen: (open: boolean) => void;
 }

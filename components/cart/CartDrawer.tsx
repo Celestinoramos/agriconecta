@@ -65,11 +65,20 @@ export default function CartDrawer() {
             </div>
             
             <div className="flex flex-col gap-2">
-              <WhatsAppButton className="w-full" size="lg" />
+              <Button
+                size="lg"
+                className="w-full"
+                onClick={() => setIsDrawerOpen(false)}
+                asChild
+              >
+                <Link href="/checkout">Finalizar Compra</Link>
+              </Button>
+              
+              <WhatsAppButton className="w-full" size="lg" variant="outline" />
               
               <Button
-                variant="outline"
-                size="lg"
+                variant="ghost"
+                size="sm"
                 className="w-full"
                 onClick={() => setIsDrawerOpen(false)}
                 asChild
