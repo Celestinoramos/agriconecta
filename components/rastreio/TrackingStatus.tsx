@@ -66,7 +66,7 @@ export default function TrackingStatus({ estado, nota }: TrackingStatusProps) {
   return (
     <div className={`p-6 rounded-lg border-2 ${config.borderColor} ${config.bgColor}`}>
       <div className="flex items-start gap-4">
-        <div className={`p-3 rounded-full ${config.bgColor} ${config.cor}`}>
+        <div className={`p-3 rounded-full bg-white/50 ${config.cor}`}>
           <Icon className="h-8 w-8" />
         </div>
         <div className="flex-1">

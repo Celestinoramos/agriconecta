@@ -36,7 +36,7 @@ export default async function RastreioPage({ params }: PageProps) {
   const estadoActualHistorico = pedido.estadoHistorico.find(h => h.estado === estadoActual);
 
   // WhatsApp link with pre-filled message
-  const WHATSAPP_NUMERO = '244937321982';
+  const WHATSAPP_NUMERO = process.env.NEXT_PUBLIC_WHATSAPP_SUPORTE || '244937321982';
   const mensagemWhatsApp = `Olá! Tenho uma dúvida sobre o meu pedido ${pedido.numero}.`;
   const whatsappLink = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(mensagemWhatsApp)}`;
 

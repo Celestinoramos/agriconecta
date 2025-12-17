@@ -16,7 +16,7 @@ export default function RastreioPage() {
           <Search className="h-16 w-16 mx-auto mb-4" />
           <h1 className="text-4xl font-bold mb-3">Rastrear Pedido</h1>
           <p className="text-green-100 text-lg">
-            Insira o código de rastreio para acompanhar o seu pedido em tempo real
+            Insira o código de rastreio ou número do pedido para acompanhar em tempo real
           </p>
         </div>
       </section>

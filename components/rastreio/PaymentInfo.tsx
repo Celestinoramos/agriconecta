@@ -108,7 +108,7 @@ export default function PaymentInfo({ total, numeroPedido, pedidoId }: PaymentIn
               <p className="font-bold text-lg text-green-600">{formatarPreco(total)}</p>
             </div>
             <button
-              onClick={() => copyToClipboard(total.toString(), 'Valor')}
+              onClick={() => copyToClipboard(formatarPreco(total), 'Valor')}
               className="p-2 hover:bg-green-100 rounded transition-colors"
               aria-label="Copiar valor"
             >
