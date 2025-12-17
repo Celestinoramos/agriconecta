@@ -77,9 +77,9 @@ export default function UploadComprovativo({ pedidoId }: UploadComprovativoProps
 
       setIsUploaded(true);
       toast.success('Comprovativo enviado com sucesso!');
-    } catch (error: any) {
+    } catch (error) {
       console.error('Erro ao enviar comprovativo:', error);
-      toast.error(error.message || 'Erro ao enviar comprovativo');
+      toast.error('Erro ao enviar comprovativo');
     } finally {
       setIsUploading(false);
     }

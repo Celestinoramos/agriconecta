@@ -82,7 +82,7 @@ export async function POST(
       url: comprovativoUrl,
     }, { status: 200 });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error('Erro ao enviar comprovativo:', error);
     return NextResponse.json(
       { error: 'Erro ao processar upload' },

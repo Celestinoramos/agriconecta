@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { renderToStream } from '@react-pdf/renderer';
+import { renderToBuffer } from '@react-pdf/renderer';
 import { obterPedidoPorId } from '@/lib/db/pedidos';
 import { gerarQRCodePagamento } from '@/lib/qrcode';
-import FaturaPDF from '@/lib/pdf/fatura';
+import { gerarFaturaPDF } from '@/lib/pdf/fatura';
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -32,26 +32,18 @@ export async function GET(
     }
 
     // Generate PDF
-    const stream = await renderToStream(
-      <FaturaPDF pedido={pedido} qrCodeUrl={qrCodeUrl} />
-    );
-
-    // Convert stream to buffer
-    const chunks: Uint8Array[] = [];
-    for await (const chunk of stream) {
-      chunks.push(chunk);
-    }
-    const buffer = Buffer.concat(chunks);
+    const pdfDoc = gerarFaturaPDF({ pedido, qrCodeUrl });
+    const buffer = await renderToBuffer(pdfDoc);
 
     // Return PDF
-    return new NextResponse(buffer, {
+    return new NextResponse(new Uint8Array(buffer), {
       headers: {
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="fatura-${pedido.numero}.pdf"`,
       },
     });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error('Erro ao gerar PDF:', error);
     return NextResponse.json(
       { error: 'Erro ao gerar fatura PDF' },

@@ -160,7 +160,7 @@ export default function PaymentInstructions({
           <h4 className="font-medium text-sm mb-2">Como pagar:</h4>
           <ol className="list-decimal list-inside space-y-1 text-sm text-gray-600">
             <li>Aceda à app do seu banco ou ATM</li>
-            <li>Selecione "Transferência Bancária"</li>
+            <li>Selecione &quot;Transferência Bancária&quot;</li>
             <li>Insira os dados acima</li>
             <li>Confirme a transferência</li>
             <li>Envie o comprovativo abaixo</li>

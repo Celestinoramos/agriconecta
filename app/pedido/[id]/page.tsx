@@ -42,7 +42,7 @@ export default async function PedidoPage({ params }: PageProps) {
     console.error('Erro ao gerar QR Code:', error);
   }
 
-  const enderecoEntrega = pedido.enderecoEntrega as any;
+  const enderecoEntrega = pedido.enderecoEntrega as Record<string, any>;
 
   return (
     <main className="min-h-screen bg-gray-50">

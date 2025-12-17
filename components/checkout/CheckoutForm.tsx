@@ -10,7 +10,6 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { checkoutSchema } from '@/lib/validations/checkout';
 import { PROVINCIAS_ANGOLA } from '@/lib/constants/provincias';
-import { formatarPreco } from '@/lib/cart';
 import OrderSummary from './OrderSummary';
 
 export default function CheckoutForm() {
@@ -117,20 +116,20 @@ export default function CheckoutForm() {
 
       // Redirect to order confirmation page
       router.push(`/pedido/${result.pedidoId}`);
-    } catch (error: any) {
+    } catch (error) {
       console.error('Erro no checkout:', error);
       
-      if (error.errors) {
+      if ((error as any).errors) {
         // Zod validation errors
         const newErrors: Record<string, string> = {};
-        error.errors.forEach((err: any) => {
+        (error as any).errors.forEach((err: any) => {
           const path = err.path.join('.');
           newErrors[path] = err.message;
         });
         setErrors(newErrors);
         toast.error('Por favor, corrija os erros no formulário');
       } else {
-        toast.error(error.message || 'Erro ao processar pedido');
+        toast.error((error as Error).message || 'Erro ao processar pedido');
       }
     } finally {
       setIsSubmitting(false);

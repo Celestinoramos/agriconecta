@@ -1,4 +1,3 @@
-import { redirect } from 'next/navigation';
 import { Metadata } from 'next';
 import CheckoutForm from '@/components/checkout/CheckoutForm';
 

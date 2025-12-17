@@ -27,7 +27,7 @@ export default async function RastreioPage({ params }: PageProps) {
     notFound();
   }
 
-  const enderecoEntrega = pedido.enderecoEntrega as any;
+  const enderecoEntrega = pedido.enderecoEntrega as Record<string, any>;
 
   return (
     <main className="min-h-screen bg-gray-50">

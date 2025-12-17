@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckCircle, Circle, Clock, Package, Truck, Home, XCircle } from 'lucide-react';
+import { CheckCircle, Clock, Package, Truck, Home, XCircle } from 'lucide-react';
 import { EstadoPedido } from '@/types/pedido';
 
 interface TimelineItem {

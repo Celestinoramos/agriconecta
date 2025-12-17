@@ -137,7 +137,7 @@ interface FaturaPDFProps {
 }
 
 const FaturaPDF: React.FC<FaturaPDFProps> = ({ pedido, qrCodeUrl }) => {
-  const enderecoEntrega = pedido.enderecoEntrega as any;
+  const enderecoEntrega = pedido.enderecoEntrega as Record<string, any>;
   const dataEmissao = pedido.faturaGeradaEm 
     ? new Date(pedido.faturaGeradaEm).toLocaleDateString('pt-AO')
     : new Date().toLocaleDateString('pt-AO');
@@ -319,5 +319,9 @@ const FaturaPDF: React.FC<FaturaPDFProps> = ({ pedido, qrCodeUrl }) => {
     </Document>
   );
 };
+
+export function gerarFaturaPDF(props: FaturaPDFProps) {
+  return <FaturaPDF {...props} />;
+}
 
 export default FaturaPDF;

@@ -28,20 +28,20 @@ export async function POST(request: NextRequest) {
       message: 'Pedido criado com sucesso',
     }, { status: 201 });
 
-  } catch (error: any) {
+  } catch (error) {
     console.error('Erro ao criar pedido:', error);
 
-    if (error.name === 'ZodError') {
+    if ((error as any).name === 'ZodError') {
       return NextResponse.json({
         success: false,
         error: 'Dados inválidos',
-        details: error.errors,
+        details: (error as any).errors,
       }, { status: 400 });
     }
 
     return NextResponse.json({
       success: false,
-      error: error.message || 'Erro ao processar pedido',
+      error: (error as Error).message || 'Erro ao processar pedido',
     }, { status: 500 });
   }
 }
