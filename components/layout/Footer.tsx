@@ -36,12 +36,6 @@ export default function Footer() {
               >
                 Produtos
               </Link>
-              <Link
-                href="/servicos"
-                className="text-gray-400 hover:text-white transition-colors min-h-[44px] flex items-center justify-center md:justify-start"
-              >
-                Serviços
-              </Link>
             </nav>
           </div>
 

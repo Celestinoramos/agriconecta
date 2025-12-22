@@ -27,9 +27,6 @@ export default function Home() {
             <Button asChild size="lg" className="bg-white text-green-700 hover:bg-green-50 min-h-[44px] w-full sm:w-auto">
               <Link href="/produtos">Ver Produtos</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-white text-white hover:bg-green-700 min-h-[44px] w-full sm:w-auto">
-              <Link href="/servicos">Serviços para Agricultores</Link>
-            </Button>
           </div>
         </div>
       </section>

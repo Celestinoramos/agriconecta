@@ -1,10 +1,10 @@
-generator client {
-  provider = "prisma-client-js"
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+generator client {
+  provider = "prisma-client-js"
 }
 
 // ==================== UTILIZADORES ====================
@@ -144,5 +144,8 @@ model EstadoHistorico {
 }
 
 // ==================== ENUMS ====================
-// Nota: SQLite não suporta enums nativos, então removemos as definições de enum
-// Os valores são armazenados como strings e validados na aplicação
+enum UserRole {
+  CUSTOMER
+  FARMER
+  ADMIN
+}

@@ -107,9 +107,6 @@ export default function ProdutosPage() {
           <p className="text-gray-600 mb-5 text-sm sm:text-base md:mb-6">
             Entre em contacto connosco para mais informações sobre os produtos ou para fazer pedidos em quantidade.
           </p>
-          <Button asChild size="lg" className="w-full sm:w-auto min-h-[44px]">
-            <Link href="/servicos">Ver Serviços</Link>
-          </Button>
         </div>
       </section>
     </main>

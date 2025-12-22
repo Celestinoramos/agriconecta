@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, ShoppingBag, Briefcase, Truck } from 'lucide-react';
+import { Home, ShoppingBag, Truck } from 'lucide-react';
 
 const navItems = [
   {
@@ -19,11 +19,6 @@ const navItems = [
     href: '/rastreio',
     label: 'Rastreio',
     icon: Truck,
-  },
-  {
-    href: '/servicos',
-    label: 'Serviços',
-    icon: Briefcase,
   },
 ];
 
@@ -49,10 +44,6 @@ export default function BottomNav() {
               aria-current={isActive ? 'page' : undefined}
             >
               <Icon className="h-5 w-5" />
-              <span className="text-xs font-medium">{item.label}</span>
-              {isActive && (
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-1 bg-green-600 rounded-t-full" />
-              )}
             </Link>
           );
         })}

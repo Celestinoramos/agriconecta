@@ -9,7 +9,6 @@ import CartIcon from '@/components/cart/CartIcon';
 const navLinks = [
   { href: '/', label: 'Início' },
   { href: '/produtos', label: 'Produtos' },
-  { href: '/servicos', label: 'Serviços' },
   { href: '/rastreio', label: 'Rastreio' },
 ];
 
