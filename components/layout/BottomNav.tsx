@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, ShoppingBag, Truck } from 'lucide-react';
+import { BookOpen, Home, ShoppingBag, Truck } from 'lucide-react';
 
 const navItems = [
   {
@@ -19,6 +19,11 @@ const navItems = [
     href: '/rastreio',
     label: 'Rastreio',
     icon: Truck,
+  },
+    {
+    href: '/dicas',
+    label: 'Dicas Nutricionais',
+    icon: BookOpen
   },
 ];
 

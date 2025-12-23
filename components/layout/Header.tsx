@@ -9,6 +9,7 @@ import CartIcon from '@/components/cart/CartIcon';
 const navLinks = [
   { href: '/', label: 'Início' },
   { href: '/produtos', label: 'Produtos' },
+  { href: '/dicas', label: 'Dicas Nutricionais' },
   { href: '/rastreio', label: 'Rastreio' },
 ];
 
