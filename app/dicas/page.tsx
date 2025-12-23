@@ -98,7 +98,6 @@ export default async function DicasPage() {
 function CategoryButton({
   icon,
   label,
-  category,
 }:  {
   icon: React.ReactNode
   label: string
