@@ -11,8 +11,10 @@ import { useRouter } from 'next/navigation';
 const navLinks = [
   { href: '/', label: 'Início' },
   { href: '/produtos', label: 'Produtos' },
-  { href: '/dicas', label: 'Dicas Nutricionais' },
-  { href: '/rastreio', label: 'Rastreio' },
+  { href: '/servicos', label: 'Serviços' },
+  { href: '/dicas', label: 'Dicas' },
+  { href: '/sobre', label: 'Sobre' },
+  { href: '/contacto', label: 'Contacto' },
 ];
 
 export default function Header() {
