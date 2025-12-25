@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import BottomNav from "@/components/layout/BottomNav";
 import Footer from "@/components/layout/Footer";
 import { ServiceWorkerRegistration } from "@/components/ServiceWorkerRegistration";
+import { AuthProvider } from "@/components/auth/AuthProvider";
 import { CartProvider } from "@/components/cart/CartContext";
 import CartDrawer from "@/components/cart/CartDrawer";
 import { Toaster } from "sonner";
@@ -87,15 +88,17 @@ export default function RootLayout({
   return (
     <html lang="pt-AO">
       <body className="font-sans antialiased">
-        <CartProvider>
-          <ServiceWorkerRegistration />
-          <Header />
-          {children}
-          <Footer />
-          <BottomNav />
-          <CartDrawer />
-          <Toaster position="top-center" richColors />
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <ServiceWorkerRegistration />
+            <Header />
+            {children}
+            <Footer />
+            <BottomNav />
+            <CartDrawer />
+            <Toaster position="top-center" richColors />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

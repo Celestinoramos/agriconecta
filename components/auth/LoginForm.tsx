@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from './AuthProvider'
+import { SocialLoginButtons } from './SocialLoginButtons'
+import Link from 'next/link'
 
 export function LoginForm() {
   const [email, setEmail] = useState('')
@@ -19,7 +21,7 @@ export function LoginForm() {
 
     try {
       await signIn(email, password)
-      router.push('/minha-conta')
+      router.push('/')
     } catch (err: any) {
       setError(err.message || 'Erro ao fazer login')
     } finally {
@@ -60,6 +62,15 @@ export function LoginForm() {
           />
         </div>
 
+        <div className="flex justify-end">
+          <Link
+            href="/recuperar-password"
+            className="text-sm text-green-600 hover:text-green-700"
+          >
+            Esqueceu a palavra-passe?
+          </Link>
+        </div>
+
         {error && (
           <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm">
             {error}
@@ -74,6 +85,28 @@ export function LoginForm() {
           {loading ? 'A entrar...' : 'Entrar'}
         </button>
       </form>
+
+      <div className="mt-6">
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-2 bg-white text-gray-500">ou</span>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <SocialLoginButtons />
+        </div>
+      </div>
+
+      <div className="mt-6 text-center text-sm text-gray-600">
+        Não tem uma conta?{' '}
+        <Link href="/registar" className="text-green-600 hover:text-green-700 font-medium">
+          Criar conta
+        </Link>
+      </div>
     </div>
   )
 }

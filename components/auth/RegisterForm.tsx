@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from './AuthProvider'
+import { SocialLoginButtons } from './SocialLoginButtons'
+import Link from 'next/link'
 
 export function RegisterForm() {
   const [nome, setNome] = useState('')
@@ -39,7 +41,7 @@ export function RegisterForm() {
         telefone,
       })
       
-      // TODO: Show success message and email verification instructions
+      // Redirect to login with success message
       router.push('/login?registered=true')
     } catch (err: any) {
       setError(err.message || 'Erro ao criar conta')
@@ -110,6 +112,7 @@ export function RegisterForm() {
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
             placeholder="••••••••"
           />
+          <p className="text-xs text-gray-500 mt-1">Mínimo de 8 caracteres</p>
         </div>
 
         <div>
@@ -142,6 +145,28 @@ export function RegisterForm() {
           {loading ? 'A criar conta...' : 'Criar conta'}
         </button>
       </form>
+
+      <div className="mt-6">
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-300"></div>
+          </div>
+          <div className="relative flex justify-center text-sm">
+            <span className="px-2 bg-white text-gray-500">ou</span>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <SocialLoginButtons />
+        </div>
+      </div>
+
+      <div className="mt-6 text-center text-sm text-gray-600">
+        Já tem uma conta?{' '}
+        <Link href="/login" className="text-green-600 hover:text-green-700 font-medium">
+          Entrar
+        </Link>
+      </div>
     </div>
   )
 }
