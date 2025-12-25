@@ -106,21 +106,32 @@ export async function PATCH(request: NextRequest) {
 
     // Prevent removing the last SUPER_ADMIN
     if (newRole !== USER_ROLES.SUPER_ADMIN) {
-      const targetUser = await prisma.user.findUnique({
-        where: { id: userId },
-      });
+      try {
+        // Check current role and count super admins in a transaction
+        await prisma.$transaction(async (tx) => {
+          const targetUser = await tx.user.findUnique({
+            where: { id: userId },
+            select: { role: true },
+          });
 
-      if (targetUser?.role === USER_ROLES.SUPER_ADMIN) {
-        const superAdminCount = await prisma.user.count({
-          where: { role: USER_ROLES.SUPER_ADMIN },
+          if (targetUser?.role === USER_ROLES.SUPER_ADMIN) {
+            const superAdminCount = await tx.user.count({
+              where: { role: USER_ROLES.SUPER_ADMIN },
+            });
+
+            if (superAdminCount <= 1) {
+              throw new Error('Não pode remover o último Super Administrador');
+            }
+          }
         });
-
-        if (superAdminCount <= 1) {
+      } catch (error) {
+        if ((error as Error).message === 'Não pode remover o último Super Administrador') {
           return NextResponse.json(
-            { error: 'Não pode remover o último Super Administrador' },
+            { error: (error as Error).message },
             { status: 400 }
           );
         }
+        throw error;
       }
     }
 

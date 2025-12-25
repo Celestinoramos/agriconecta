@@ -173,7 +173,7 @@ export default function AdminUtilizadoresPage() {
                       <span
                         className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${getRoleBadgeColor(user.role)}`}
                       >
-                        {getRoleDisplayName(user.role as any)}
+                        {getRoleDisplayName(user.role as typeof USER_ROLES[keyof typeof USER_ROLES])}
                       </span>
                     </td>
                     <td className="py-3 px-4">
