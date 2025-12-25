@@ -1,5 +1,4 @@
 import { Sidebar } from '@/components/admin/Sidebar'
-import { redirect } from 'next/navigation'
 
 /**
  * Admin Layout

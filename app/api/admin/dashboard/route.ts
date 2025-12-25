@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import prisma from '@/lib/prisma'
 
 /**
@@ -7,7 +7,7 @@ import prisma from '@/lib/prisma'
  * Returns dashboard metrics
  * TODO: Add authentication and role verification
  */
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // TODO: Verify user is authenticated and has STAFF+ role
 

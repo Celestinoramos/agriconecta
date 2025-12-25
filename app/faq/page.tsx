@@ -57,7 +57,7 @@ const faqs: FAQItem[] = [
   },
 ]
 
-function FAQAccordion({ item, index }: { item: FAQItem; index: number }) {
+function FAQAccordion({ item }: { item: FAQItem }) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
@@ -105,7 +105,7 @@ export default function FAQPage() {
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-lg border shadow-sm">
               {faqs.map((faq, index) => (
-                <FAQAccordion key={index} item={faq} index={index} />
+                <FAQAccordion key={index} item={faq} />
               ))}
             </div>
 
