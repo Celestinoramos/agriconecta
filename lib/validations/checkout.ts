@@ -2,8 +2,8 @@ import { z } from 'zod';
 
 export const checkoutSchema = z.object({
   clienteNome: z.string().min(3, 'Nome deve ter pelo menos 3 caracteres'),
-  clienteTelefone: z.string().regex(/^244\d{9}$/, 'Telefone inválido (formato: 244XXXXXXXXX)'),
-  clienteEmail: z.string().email('Email inválido').optional().or(z.literal('')),
+  clienteTelefone: z.string().regex(/^244\d{9}$/, 'Telefone inválido (formato: 244XXXXXXXXX)').optional().or(z.literal('')),
+  clienteEmail: z.string().email('Email inválido'),
   endereco: z.object({
     rua: z.string().min(5, 'Endereço muito curto'),
     bairro: z.string().min(2, 'Bairro obrigatório'),

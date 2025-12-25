@@ -47,8 +47,8 @@ export async function POST(request: NextRequest) {
     // Create order in database
     const pedido = await criarPedido({
       clienteNome: validatedData.clienteNome,
-      clienteEmail: validatedData.clienteEmail || undefined,
-      clienteTelefone: validatedData.clienteTelefone,
+      clienteEmail: validatedData.clienteEmail,
+      clienteTelefone: validatedData.clienteTelefone || undefined,
       enderecoEntrega: validatedData.endereco,
       itens: validatedData.itens,
       metodoPagamento: 'TRANSFERENCIA_BANCARIA',
@@ -63,8 +63,8 @@ export async function POST(request: NextRequest) {
         nome: pedido.clienteNome,
         codigoRastreio: pedido.codigoRastreio,
         numeroPedido: pedido.numero,
-  });
-}
+      });
+    }
     return NextResponse.json({
       success: true,
       pedidoId: pedido.id,
