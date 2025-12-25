@@ -58,8 +58,8 @@ model Pedido {
   
   // Dados do cliente (sempre preenchidos, mesmo para utilizadores registados)
   clienteNome     String
-  clienteEmail    String?
-  clienteTelefone String
+  clienteEmail    String
+  clienteTelefone String?
   
   // Endereço de entrega (snapshot JSON)
   enderecoEntrega String          // JSON armazenado como String para compatibilidade SQLite
