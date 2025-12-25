@@ -41,7 +41,7 @@ export function DicaCard({ dica }: { dica: Dica }) {
         {/* Subtitle/Summary */}
         {dica.resumo && (
           <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-            {dica. resumo}
+            {dica.resumo}
           </p>
         )}
 
@@ -54,10 +54,10 @@ export function DicaCard({ dica }: { dica: Dica }) {
 
         {/* Author & Date */}
         <div className="text-xs text-gray-500 mb-4 flex items-center justify-between">
-          {dica.autor && <span>Por:  {dica.autor}</span>}
+          {dica.autor && <span>Por: {dica.autor}</span>}
           {dica.dataCriacao && (
             <span>
-              {new Date(dica. dataCriacao).toLocaleDateString('pt-AO')}
+              {new Date(dica.dataCriacao).toLocaleDateString('pt-AO')}
             </span>
           )}
         </div>

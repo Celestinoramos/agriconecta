@@ -46,17 +46,23 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-4 mb-6 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6 md:mb-8">
             {featuredProducts.map((produto) => (
               <Card key={produto.id} className="overflow-hidden hover:shadow-lg transition-shadow active:scale-[0.98]">
-                <div className="aspect-[4/3] w-full bg-gray-200 relative overflow-hidden">
-                  <Image
-                    src={produto.imagem}
-                    alt={produto.nome}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                </div>
+                <Link href={`/produtos/${produto.slug}`}>
+                  <div className="aspect-[4/3] w-full bg-gray-200 relative overflow-hidden">
+                    <Image
+                      src={produto.imagem}
+                      alt={produto.nome}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    />
+                  </div>
+                </Link>
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-lg sm:text-xl">{produto.nome}</CardTitle>
+                  <CardTitle className="text-lg sm:text-xl">
+                    <Link href={`/produtos/${produto.slug}`} className="hover:text-green-600 transition-colors">
+                      {produto.nome}
+                    </Link>
+                  </CardTitle>
                   <CardDescription>{produto.descricao}</CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -67,7 +73,9 @@ export default function Home() {
                       </p>
                       <p className="text-sm text-gray-500">{produto.provincia}</p>
                     </div>
-                    <Button className="w-full sm:w-auto min-h-[44px]">Comprar</Button>
+                    <Button asChild className="w-full sm:w-auto min-h-[44px]">
+                      <Link href={`/produtos/${produto.slug}`}>Ver Detalhes</Link>
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
