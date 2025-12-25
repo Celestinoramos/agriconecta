@@ -1,3 +1,5 @@
+'use client';
+
 import { WifiOff, Home, Search } from 'lucide-react'
 import Link from 'next/link'
 
