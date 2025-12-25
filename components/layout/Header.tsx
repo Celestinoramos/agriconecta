@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Menu, X, User, LogOut } from 'lucide-react';
+import { Menu, X, User, LogOut, Shield } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CartIcon from '@/components/cart/CartIcon';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useRouter } from 'next/navigation';
+import { USER_ROLES } from '@/lib/auth/roles';
 
 const navLinks = [
   { href: '/', label: 'Início' },
@@ -20,8 +21,10 @@ const navLinks = [
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const { user, loading, signOut } = useAuth();
+  const { user, userRole, loading, signOut } = useAuth();
   const router = useRouter();
+
+  const isAdmin = userRole === USER_ROLES.ADMIN || userRole === USER_ROLES.SUPER_ADMIN;
 
   const handleSignOut = async () => {
     try {
@@ -105,6 +108,16 @@ export default function Header() {
                           </svg>
                           Meus Pedidos
                         </Link>
+                        {isAdmin && (
+                          <Link
+                            href="/admin"
+                            className="flex items-center gap-2 px-4 py-2 text-sm text-green-700 hover:bg-green-50 border-t"
+                            onClick={() => setUserMenuOpen(false)}
+                          >
+                            <Shield className="w-4 h-4" />
+                            Painel Admin
+                          </Link>
+                        )}
                         <button
                           onClick={handleSignOut}
                           className="flex items-center gap-2 w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50"
@@ -215,6 +228,16 @@ export default function Header() {
                       </svg>
                       Meus Pedidos
                     </Link>
+                    {isAdmin && (
+                      <Link
+                        href="/admin"
+                        className="flex items-center gap-2 text-sm text-green-700 hover:text-green-800 py-2 border-t pt-3"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        <Shield className="w-4 h-4" />
+                        Painel Admin
+                      </Link>
+                    )}
                     <button
                       onClick={() => {
                         handleSignOut();

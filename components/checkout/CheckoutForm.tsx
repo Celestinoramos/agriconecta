@@ -20,7 +20,7 @@ export default function CheckoutForm() {
   // Form state
   const [formData, setFormData] = useState({
     clienteNome: '',
-    clienteTelefone: '244',
+    clienteTelefone: '',
     clienteEmail: '',
     endereco: {
       rua: '',
@@ -177,29 +177,8 @@ export default function CheckoutForm() {
               </div>
 
               <div>
-                <label htmlFor="clienteTelefone" className="block text-sm font-medium mb-1">
-                  Telefone <span className="text-red-500">*</span>
-                </label>
-                <input
-                  id="clienteTelefone"
-                  type="tel"
-                  value={formData.clienteTelefone}
-                  onChange={(e) => handleInputChange('clienteTelefone', e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${
-                    errors.clienteTelefone ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  placeholder="244XXXXXXXXX"
-                  required
-                />
-                {errors.clienteTelefone && (
-                  <p className="mt-1 text-sm text-red-500">{errors.clienteTelefone}</p>
-                )}
-                <p className="mt-1 text-xs text-gray-500">Formato: 244XXXXXXXXX</p>
-              </div>
-
-              <div>
                 <label htmlFor="clienteEmail" className="block text-sm font-medium mb-1">
-                  Email (opcional)
+                  Email <span className="text-red-500">*</span>
                 </label>
                 <input
                   id="clienteEmail"
@@ -210,11 +189,32 @@ export default function CheckoutForm() {
                     errors.clienteEmail ? 'border-red-500' : 'border-gray-300'
                   }`}
                   placeholder="seuemail@exemplo.com"
+                  required
                 />
                 {errors.clienteEmail && (
                   <p className="mt-1 text-sm text-red-500">{errors.clienteEmail}</p>
                 )}
                 <p className="mt-1 text-xs text-gray-500">Para receber confirmação e fatura por email</p>
+              </div>
+
+              <div>
+                <label htmlFor="clienteTelefone" className="block text-sm font-medium mb-1">
+                  Telefone (opcional)
+                </label>
+                <input
+                  id="clienteTelefone"
+                  type="tel"
+                  value={formData.clienteTelefone}
+                  onChange={(e) => handleInputChange('clienteTelefone', e.target.value)}
+                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                    errors.clienteTelefone ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="244XXXXXXXXX"
+                />
+                {errors.clienteTelefone && (
+                  <p className="mt-1 text-sm text-red-500">{errors.clienteTelefone}</p>
+                )}
+                <p className="mt-1 text-xs text-gray-500">Formato: 244XXXXXXXXX</p>
               </div>
             </CardContent>
           </Card>
