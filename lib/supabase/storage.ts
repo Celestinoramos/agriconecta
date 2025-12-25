@@ -1,15 +1,18 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || ''
 
 // Cliente com service role para operações de storage no servidor
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false
-  }
-})
+// Only initialize if environment variables are available
+export const supabaseAdmin = supabaseUrl && supabaseServiceKey 
+  ? createClient(supabaseUrl, supabaseServiceKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false
+      }
+    })
+  : null
 
 export const PRODUTOS_BUCKET = 'produtos'
 
@@ -23,10 +26,14 @@ export async function uploadProductImage(
   file: File,
   produtoId: string
 ): Promise<string> {
+  if (!supabaseAdmin) {
+    throw new Error('Supabase admin client not initialized')
+  }
+  
   const fileExt = file.name.split('.').pop()
   const fileName = `${produtoId}/${Date.now()}.${fileExt}`
   
-  const { data, error } = await supabaseAdmin.storage
+  const { error } = await supabaseAdmin.storage
     .from(PRODUTOS_BUCKET)
     .upload(fileName, file, {
       cacheControl: '3600',
@@ -47,6 +54,10 @@ export async function uploadProductImage(
  * @param imageUrl - URL completo da imagem
  */
 export async function deleteProductImage(imageUrl: string): Promise<void> {
+  if (!supabaseAdmin) {
+    throw new Error('Supabase admin client not initialized')
+  }
+  
   // Extrair path do URL
   const path = imageUrl.split(`${PRODUTOS_BUCKET}/`)[1]
   if (!path) return
@@ -68,10 +79,14 @@ export async function uploadCategoryImage(
   file: File,
   categoriaId: string
 ): Promise<string> {
+  if (!supabaseAdmin) {
+    throw new Error('Supabase admin client not initialized')
+  }
+  
   const fileExt = file.name.split('.').pop()
   const fileName = `categorias/${categoriaId}/${Date.now()}.${fileExt}`
   
-  const { data, error } = await supabaseAdmin.storage
+  const { error } = await supabaseAdmin.storage
     .from(PRODUTOS_BUCKET)
     .upload(fileName, file, {
       cacheControl: '3600',
@@ -92,6 +107,10 @@ export async function uploadCategoryImage(
  * @param imageUrl - URL completo da imagem
  */
 export async function deleteCategoryImage(imageUrl: string): Promise<void> {
+  if (!supabaseAdmin) {
+    throw new Error('Supabase admin client not initialized')
+  }
+  
   const path = imageUrl.split(`${PRODUTOS_BUCKET}/`)[1]
   if (!path) return
   

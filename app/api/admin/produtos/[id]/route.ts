@@ -24,7 +24,7 @@ const actualizarProdutoSchema = z.object({
 
 // GET - Obter produto
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -47,7 +47,7 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     
     if (!user) {
@@ -75,7 +75,7 @@ export async function PATCH(
     return NextResponse.json(produto)
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Dados inválidos', details: error.errors }, { status: 400 })
+      return NextResponse.json({ error: 'Dados inválidos', details: error.issues }, { status: 400 })
     }
     console.error('Erro ao actualizar produto:', error)
     return NextResponse.json({ error: 'Erro interno' }, { status: 500 })
@@ -84,11 +84,11 @@ export async function PATCH(
 
 // DELETE - Eliminar produto
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     
     if (!user) {

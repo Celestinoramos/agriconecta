@@ -24,7 +24,7 @@ const criarProdutoSchema = z.object({
 // GET - Listar produtos
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     
     if (!user) {
@@ -67,7 +67,7 @@ export async function GET(request: NextRequest) {
 // POST - Criar produto
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     
     if (!user) {
@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(produto, { status: 201 })
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Dados inválidos', details: error.errors }, { status: 400 })
+      return NextResponse.json({ error: 'Dados inválidos', details: error.issues }, { status: 400 })
     }
     console.error('Erro ao criar produto:', error)
     return NextResponse.json({ error: 'Erro interno' }, { status: 500 })

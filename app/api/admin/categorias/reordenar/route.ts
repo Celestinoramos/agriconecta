@@ -14,7 +14,7 @@ const reordenarSchema = z.object({
 // POST - Reordenar categorias (apenas SUPER_ADMIN)
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     
     if (!user) {
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true })
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Dados inválidos', details: error.errors }, { status: 400 })
+      return NextResponse.json({ error: 'Dados inválidos', details: error.issues }, { status: 400 })
     }
     console.error('Erro ao reordenar categorias:', error)
     return NextResponse.json({ error: 'Erro interno' }, { status: 500 })

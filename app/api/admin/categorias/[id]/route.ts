@@ -14,7 +14,7 @@ const actualizarCategoriaSchema = z.object({
 
 // GET - Obter categoria
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -37,7 +37,7 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     
     if (!user) {
@@ -65,7 +65,7 @@ export async function PATCH(
     return NextResponse.json(categoria)
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: 'Dados inválidos', details: error.errors }, { status: 400 })
+      return NextResponse.json({ error: 'Dados inválidos', details: error.issues }, { status: 400 })
     }
     console.error('Erro ao actualizar categoria:', error)
     return NextResponse.json({ error: 'Erro interno' }, { status: 500 })
@@ -74,11 +74,11 @@ export async function PATCH(
 
 // DELETE - Eliminar categoria (apenas SUPER_ADMIN)
 export async function DELETE(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     
     if (!user) {

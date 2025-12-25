@@ -5,11 +5,11 @@ import { canManageProducts } from '@/lib/auth/permissions'
 
 // POST - Toggle destaque status
 export async function POST(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
-    const supabase = createClient()
+    const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     
     if (!user) {
