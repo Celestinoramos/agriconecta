@@ -17,6 +17,7 @@ model User {
   password      String?   // Hash bcrypt, opcional para convidados
   emailVerified DateTime?
   isGuest       Boolean   @default(false) // Conta de convidado
+  role          String    @default("CUSTOMER") // CUSTOMER, STAFF, ADMIN, SUPER_ADMIN
   
   pedidos       Pedido[]
   enderecos     Endereco[]
