@@ -10,7 +10,7 @@ export const createServerSupabaseClient = async () => {
     {
       cookies: {
         getAll() {
-          return cookieStore. getAll()
+          return cookieStore.getAll()
         },
         setAll(cookiesToSet) {
           try {
