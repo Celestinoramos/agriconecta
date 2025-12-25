@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { NextResponse } from 'next/server'
 import { USER_ROLES } from '@/lib/auth/roles'
 
-export async function POST(request: Request) {
+export async function POST() {
   try {
     // Verify authentication
     const supabase = await createServerSupabaseClient()
