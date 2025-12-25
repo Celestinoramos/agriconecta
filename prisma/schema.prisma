@@ -17,6 +17,7 @@ model User {
   password      String?   // Hash bcrypt, opcional para convidados
   emailVerified DateTime?
   isGuest       Boolean   @default(false) // Conta de convidado
+  role          String    @default("CUSTOMER") // CUSTOMER, STAFF, ADMIN, SUPER_ADMIN
   
   pedidos       Pedido[]
   enderecos     Endereco[]
@@ -141,6 +142,56 @@ model EstadoHistorico {
   criadoEm  DateTime     @default(now())
   
   @@index([pedidoId])
+}
+
+// ==================== PRODUTOS ====================
+
+model Produto {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  nome        String
+  descricao   String?
+  preco       Float    // AOA
+  unidade     String   // kg, unidade, maço, etc.
+  categoriaId String
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+  imagens     String[] // URLs do Supabase Storage
+  stock       Int      @default(0)
+  activo      Boolean  @default(true)
+  destaque    Boolean  @default(false)
+  produtor    String?  // Nome do produtor
+  origem      String?  // Província de origem
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([categoriaId])
+  @@index([activo])
+  @@index([destaque])
+}
+
+model Categoria {
+  id        String    @id @default(cuid())
+  slug      String    @unique
+  nome      String
+  descricao String?
+  imagem    String?
+  ordem     Int       @default(0)
+  activa    Boolean   @default(true)
+  produtos  Produto[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  
+  @@index([activa])
+  @@index([ordem])
+}
+
+model Configuracao {
+  id        String   @id @default(cuid())
+  chave     String   @unique
+  valor     String   // JSON para valores complexos
+  descricao String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // ==================== ENUMS ====================

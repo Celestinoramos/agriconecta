@@ -3,10 +3,10 @@ import { checkoutSchema } from '@/lib/validations/checkout';
 import { criarPedido } from '@/lib/db/pedidos';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Resend client only if API key is available
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
 
 async function enviarEmailRastreio({
-
   nome,
   codigoRastreio,
   numeroPedido
@@ -16,6 +16,12 @@ async function enviarEmailRastreio({
   codigoRastreio: string,
   numeroPedido: string
 }) {
+  // Skip email sending if Resend is not configured
+  if (!resend) {
+    console.warn('Resend API key not configured. Skipping email sending.');
+    return null;
+  }
+  
   return resend.emails.send({
     from: "no-reply@teudominio.com",
     to: 'ramoscumbica2@gmail.com',
