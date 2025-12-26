@@ -1,22 +1,139 @@
 'use client';
 
-// Note: This page is a client component to support interactive cart functionality.
-// SEO metadata is handled by the root layout.tsx
+import { useState, useMemo } from 'react';
+import Link from 'next/link';
+import ProductFilters, { ProductFiltersState } from '@/components/filters/ProductFilters';
+import MobileFiltersDrawer from '@/components/filters/MobileFiltersDrawer';
+import SortSelect, { SortOption } from '@/components/filters/SortSelect';
+import InfiniteProductGrid from '@/components/products/InfiniteProductGrid';
+import RecentlyViewed from '@/components/products/RecentlyViewed';
+import EmptyState, { defaultIcons } from '@/components/ui/EmptyState';
+import Breadcrumbs from '@/components/layout/Breadcrumbs';
+import { useSearchParams } from 'next/navigation';
+import produtos from '@/data/produtos.json';
 
-import Link from "next/link";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import AddToCartButton from "@/components/cart/AddToCartButton";
-import produtos from "@/data/produtos.json";
-import { Produto } from "@/types/cart";
+const PAGE_SIZE = 12;
 
 export default function ProdutosPage() {
-  const categorias = Array.from(new Set(produtos.map(p => p.categoria)));
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get('q') || '';
+
+  // Extract unique values for filters
+  const categorias = useMemo(() => Array.from(new Set(produtos.map(p => p.categoria))), []);
+  const provincias = useMemo(() => Array.from(new Set(produtos.map(p => p.provincia))), []);
+  const produtores = useMemo(() => Array.from(new Set(produtos.map(p => p.produtor))), []);
+
+  const [filters, setFilters] = useState<ProductFiltersState>({
+    categoria: '',
+    precoMin: '',
+    precoMax: '',
+    provincia: '',
+    produtor: '',
+    emStock: false,
+    avaliacao: 0,
+  });
+
+  const [sortBy, setSortBy] = useState<SortOption>('nome-asc');
+
+  // Apply filters and search
+  const filteredProducts = useMemo(() => {
+    let filtered = [...produtos];
+
+    // Search filter
+    if (searchQuery) {
+      const queryLower = searchQuery.toLowerCase();
+      filtered = filtered.filter(p =>
+        p.nome.toLowerCase().includes(queryLower) ||
+        p.categoria.toLowerCase().includes(queryLower) ||
+        p.produtor.toLowerCase().includes(queryLower) ||
+        p.descricao.toLowerCase().includes(queryLower)
+      );
+    }
+
+    // Category filter
+    if (filters.categoria) {
+      filtered = filtered.filter(p => p.categoria === filters.categoria);
+    }
+
+    // Price range filter
+    if (filters.precoMin) {
+      filtered = filtered.filter(p => p.preco >= Number(filters.precoMin));
+    }
+    if (filters.precoMax) {
+      filtered = filtered.filter(p => p.preco <= Number(filters.precoMax));
+    }
+
+    // Province filter
+    if (filters.provincia) {
+      filtered = filtered.filter(p => p.provincia === filters.provincia);
+    }
+
+    // Producer filter
+    if (filters.produtor) {
+      filtered = filtered.filter(p => p.produtor === filters.produtor);
+    }
+
+    // In stock filter
+    if (filters.emStock) {
+      filtered = filtered.filter(p => p.disponibilidade === true);
+    }
+
+    // Rating filter
+    if (filters.avaliacao > 0) {
+      filtered = filtered.filter(p => {
+        // @ts-ignore - mediaAvaliacoes might not exist in JSON
+        const rating = p.mediaAvaliacoes || 0;
+        return rating >= filters.avaliacao;
+      });
+    }
+
+    return filtered;
+  }, [searchQuery, filters]);
+
+  // Apply sorting
+  const sortedProducts = useMemo(() => {
+    const sorted = [...filteredProducts];
+
+    switch (sortBy) {
+      case 'nome-asc':
+        sorted.sort((a, b) => a.nome.localeCompare(b.nome, 'pt'));
+        break;
+      case 'nome-desc':
+        sorted.sort((a, b) => b.nome.localeCompare(a.nome, 'pt'));
+        break;
+      case 'preco-asc':
+        sorted.sort((a, b) => a.preco - b.preco);
+        break;
+      case 'preco-desc':
+        sorted.sort((a, b) => b.preco - a.preco);
+        break;
+      case 'recentes':
+        // Assuming products with higher IDs are more recent
+        sorted.sort((a, b) => Number(b.id) - Number(a.id));
+        break;
+    }
+
+    return sorted;
+  }, [filteredProducts, sortBy]);
+
+  // Pagination for infinite scroll
+  const initialProducts = sortedProducts.slice(0, PAGE_SIZE);
+
+  const handleLoadMore = async (page: number): Promise<any[]> => {
+    const startIndex = page * PAGE_SIZE;
+    const endIndex = startIndex + PAGE_SIZE;
+    
+    // Simulate async load (in real app, this would be an API call)
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(sortedProducts.slice(startIndex, endIndex));
+      }, 300);
+    });
+  };
 
   return (
     <main className="min-h-screen bg-gray-50">
-      {/* Header - Mobile First */}
+      {/* Header */}
       <section className="bg-green-600 text-white py-8 px-4 sm:py-10 md:py-12">
         <div className="max-w-6xl mx-auto">
           <Link href="/" className="text-green-100 hover:text-white mb-3 inline-flex items-center min-h-[44px] active:scale-95 transition-transform sm:mb-4">
@@ -24,81 +141,103 @@ export default function ProdutosPage() {
             <span>Voltar para Início</span>
           </Link>
           <h1 className="text-3xl font-bold mb-3 sm:text-4xl md:text-5xl md:mb-4">
-            Catálogo de Produtos
+            {searchQuery ? `Resultados para "${searchQuery}"` : 'Catálogo de Produtos'}
           </h1>
           <p className="text-base text-green-100 sm:text-lg md:text-xl">
-            Produtos frescos e de qualidade diretamente dos agricultores angolanos
+            {searchQuery
+              ? `${sortedProducts.length} ${sortedProducts.length === 1 ? 'produto encontrado' : 'produtos encontrados'}`
+              : 'Produtos frescos e de qualidade diretamente dos agricultores angolanos'}
           </p>
         </div>
       </section>
 
-      {/* Filters - Mobile First with Horizontal Scroll */}
-      <section className="py-4 px-4 bg-white border-b sticky top-16 z-30 sm:py-6 md:py-8">
+      {/* Breadcrumbs */}
+      <div className="max-w-6xl mx-auto">
+        <Breadcrumbs
+          items={[
+            { label: 'Produtos', href: '/produtos' },
+          ]}
+        />
+      </div>
+
+      {/* Main Content */}
+      <section className="py-8 px-4 sm:py-10 md:py-12">
         <div className="max-w-6xl mx-auto">
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide sm:flex-wrap sm:gap-3">
-            <Button variant="outline" className="min-h-[44px] whitespace-nowrap flex-shrink-0">
-              Todas as Categorias
-            </Button>
-            {categorias.map((categoria) => (
-              <Button key={categoria} variant="ghost" className="min-h-[44px] whitespace-nowrap flex-shrink-0">
-                {categoria}
-              </Button>
-            ))}
+          <div className="flex flex-col lg:flex-row gap-8">
+            {/* Sidebar Filters - Desktop */}
+            <aside className="hidden lg:block w-64 flex-shrink-0">
+              <div className="sticky top-24 bg-white rounded-lg shadow-sm p-6">
+                <ProductFilters
+                  filters={filters}
+                  onChange={setFilters}
+                  categorias={categorias}
+                  provincias={provincias}
+                  produtores={produtores}
+                />
+              </div>
+            </aside>
+
+            {/* Products Section */}
+            <div className="flex-1">
+              {/* Toolbar - Mobile Filters + Sort */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-6">
+                <div className="lg:hidden">
+                  <MobileFiltersDrawer
+                    filters={filters}
+                    onChange={setFilters}
+                    categorias={categorias}
+                    provincias={provincias}
+                    produtores={produtores}
+                  />
+                </div>
+                <div className="flex-1 sm:flex sm:justify-end">
+                  <SortSelect value={sortBy} onChange={setSortBy} />
+                </div>
+              </div>
+
+              {/* Products Grid or Empty State */}
+              {sortedProducts.length === 0 ? (
+                <EmptyState
+                  title={searchQuery ? 'Nenhum resultado encontrado' : 'Nenhum produto disponível'}
+                  description={
+                    searchQuery
+                      ? 'Tente ajustar os filtros ou usar termos de pesquisa diferentes.'
+                      : 'Não há produtos que correspondam aos filtros selecionados.'
+                  }
+                  icon={searchQuery ? defaultIcons.search : defaultIcons.filter}
+                  action={{
+                    label: searchQuery ? 'Ver Todos os Produtos' : 'Limpar Filtros',
+                    onClick: () => {
+                      if (searchQuery) {
+                        window.location.href = '/produtos';
+                      } else {
+                        setFilters({
+                          categoria: '',
+                          precoMin: '',
+                          precoMax: '',
+                          provincia: '',
+                          produtor: '',
+                          emStock: false,
+                          avaliacao: 0,
+                        });
+                      }
+                    },
+                  }}
+                />
+              ) : (
+                <InfiniteProductGrid
+                  initialProducts={initialProducts}
+                  totalProducts={sortedProducts.length}
+                  onLoadMore={handleLoadMore}
+                />
+              )}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Products Grid - Mobile First (1 col -> 2 -> 3 -> 4) */}
-      <section className="py-8 px-4 sm:py-10 md:py-12">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
-            {produtos.map((produto) => (
-              <Card key={produto.id} className="overflow-hidden hover:shadow-lg transition-shadow active:scale-[0.98]">
-                <Link href={`/produtos/${produto.slug}`}>
-                  <div className="aspect-[4/3] w-full bg-gray-200 relative overflow-hidden">
-                    <Image
-                      src={produto.imagem}
-                      alt={produto.nome}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                    />
-                  </div>
-                </Link>
-                <CardHeader className="pb-3">
-                  <Link href={`/produtos/${produto.slug}`}>
-                    <CardTitle className="text-base sm:text-lg hover:text-green-600 transition-colors">
-                      {produto.nome}
-                    </CardTitle>
-                  </Link>
-                  <CardDescription className="line-clamp-2 text-sm">
-                    {produto.descricao}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-xl font-bold text-green-600 sm:text-2xl">
-                        {produto.preco.toLocaleString('pt-AO')} Kz
-                      </span>
-                    </div>
-                    <div className="text-sm text-gray-500 space-y-1">
-                      <p>📍 {produto.provincia}</p>
-                      <p>👨‍🌾 {produto.produtor}</p>
-                    </div>
-                    <div className="pt-2">
-                      <span className="inline-block px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded">
-                        {produto.categoria}
-                      </span>
-                    </div>
-                    <AddToCartButton produto={produto as Produto} className="w-full mt-4 min-h-[44px]" />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Recently Viewed */}
+      <RecentlyViewed />
 
       {/* Info Section */}
       <section className="py-10 px-4 bg-white sm:py-12">

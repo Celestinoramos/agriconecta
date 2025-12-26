@@ -2,9 +2,11 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Menu, X, User, LogOut, Shield } from 'lucide-react';
+import { Menu, X, User, LogOut, Shield, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CartIcon from '@/components/cart/CartIcon';
+import SearchBar from '@/components/search/SearchBar';
+import MobileSearchButton from '@/components/search/MobileSearchButton';
 import { useAuth } from '@/components/auth/AuthProvider';
 import { useRouter } from 'next/navigation';
 import { USER_ROLES } from '@/lib/auth/roles';
@@ -39,15 +41,20 @@ export default function Header() {
   return (
     <header className="bg-white border-b sticky top-0 z-50 safe-top">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 gap-4">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 min-h-[44px]">
+          <Link href="/" className="flex items-center gap-2 min-h-[44px] flex-shrink-0">
             <span className="text-2xl">🌾</span>
             <span className="text-xl font-bold text-green-600">AgriConecta</span>
           </Link>
 
+          {/* Desktop Search Bar */}
+          <div className="hidden md:flex flex-1 max-w-xl mx-4">
+            <SearchBar />
+          </div>
+
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-4">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -57,6 +64,13 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
+            <Link
+              href="/favoritos"
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center text-gray-700 hover:text-green-600 transition-colors"
+              aria-label="Favoritos"
+            >
+              <Heart className="h-5 w-5" />
+            </Link>
             <CartIcon />
             
             {/* Desktop Auth Menu */}
@@ -148,8 +162,16 @@ export default function Header() {
             )}
           </nav>
 
-          {/* Mobile: Cart Icon + Menu Button */}
-          <div className="flex items-center gap-2 md:hidden">
+          {/* Mobile: Search, Wishlist, Cart, Menu Button */}
+          <div className="flex items-center gap-1 md:hidden">
+            <MobileSearchButton />
+            <Link
+              href="/favoritos"
+              className="min-h-[44px] min-w-[44px] flex items-center justify-center"
+              aria-label="Favoritos"
+            >
+              <Heart className="h-5 w-5" />
+            </Link>
             <CartIcon />
             <Button
               variant="ghost"
