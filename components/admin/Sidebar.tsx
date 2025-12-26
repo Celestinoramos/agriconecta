@@ -8,11 +8,15 @@ import {
   ShoppingCart, 
   Users, 
   Settings,
-  LogOut 
+  LogOut,
+  FileText,
+  BarChart3
 } from "lucide-react"
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/dashboard", label: "Dashboard Avançado", icon: BarChart3 },
+  { href: "/admin/relatorios", label: "Relatórios", icon: FileText },
   { href: "/admin/pedidos", label: "Pedidos", icon: ShoppingCart },
   { href: "/admin/produtos", label: "Produtos", icon: Package },
   { href: "/admin/utilizadores", label: "Utilizadores", icon: Users },
