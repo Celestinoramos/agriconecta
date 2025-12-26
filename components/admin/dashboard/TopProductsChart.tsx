@@ -67,7 +67,7 @@ export function TopProductsChart({ data }: TopProductsChartProps) {
             dataKey="receita"
             radius={[0, 8, 8, 0]}
           >
-            {data.map((entry, index) => (
+            {data.map((_entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Bar>

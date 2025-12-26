@@ -11,20 +11,9 @@ interface SalesChartProps {
   groupBy: 'day' | 'week' | 'month'
 }
 
-export function SalesChart({ data, groupBy }: SalesChartProps) {
+export function SalesChart({ data }: SalesChartProps) {
   const formatCurrency = (value: number) => {
     return `${(value / 1000).toFixed(0)}k Kz`
-  }
-
-  const getXAxisLabel = () => {
-    switch (groupBy) {
-      case 'day':
-        return 'Dia'
-      case 'week':
-        return 'Semana'
-      case 'month':
-        return 'Mês'
-    }
   }
 
   return (

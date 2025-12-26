@@ -1,6 +1,6 @@
 'use client'
 
-import { DollarSign, Package, ShoppingCart, TrendingUp, TrendingDown, Users, Clock } from 'lucide-react'
+import { DollarSign, ShoppingCart, TrendingUp, TrendingDown, Users, Clock } from 'lucide-react'
 
 interface MetricCardProps {
   title: string
