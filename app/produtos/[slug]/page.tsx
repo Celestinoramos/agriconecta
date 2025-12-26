@@ -11,6 +11,7 @@ import ProductTabs from '@/components/product/ProductTabs';
 import ProductReviews from '@/components/product/ProductReviews';
 import RelatedProducts from '@/components/product/RelatedProducts';
 import ShareButtons from '@/components/product/ShareButtons';
+import ProductViewTracker from '@/components/products/ProductViewTracker';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 
@@ -115,6 +116,18 @@ export default function ProductPage({ params }: { params: { slug: string } }) {
 
   return (
     <>
+      {/* Track product view in recently viewed */}
+      <ProductViewTracker
+        product={{
+          id: produto.id,
+          slug: produto.slug,
+          nome: produto.nome,
+          imagem: produto.imagem,
+          preco: produto.preco,
+          categoria: produto.categoria,
+        }}
+      />
+
       {/* JSON-LD Structured Data - Safe as we control the data source */}
       <script
         type="application/ld+json"
