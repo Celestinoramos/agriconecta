@@ -6,37 +6,78 @@ import { Produto, Prisma } from '@prisma/client'
  */
 
 export interface CriarProdutoDTO {
-  slug: string
   nome: string
   descricao?: string
+  descricaoCompleta?: string
   preco: number
   unidade: string
   categoriaId: string
   imagens?: string[]
   stock?: number
+  produtor?: string
+  provincia?: string
+  nutricional?: string // JSON string
+  conservacao?: string
   activo?: boolean
   destaque?: boolean
-  produtor?: string
-  origem?: string
+}
+
+export interface ActualizarProdutoDTO extends Partial<CriarProdutoDTO> {
+  id: string
+}
+
+export interface FiltrosProduto {
+  categoriaId?: string
+  activo?: boolean
+  destaque?: boolean
+  pesquisa?: string
+  pagina?: number
+  porPagina?: number
+}
+
+// Gerar slug único
+function gerarSlug(nome: string): string {
+  return nome
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)/g, '')
+}
+
+async function gerarSlugUnico(nome: string): Promise<string> {
+  let slug = gerarSlug(nome)
+  let contador = 0
+  
+  while (true) {
+    const slugTeste = contador === 0 ? slug : `${slug}-${contador}`
+    const existe = await prisma.produto.findUnique({ where: { slug: slugTeste } })
+    if (!existe) return slugTeste
+    contador++
+  }
 }
 
 /**
  * Create a new product
  */
-export async function criarProduto(data: CriarProdutoDTO): Promise<Produto> {
-  return await prisma.produto.create({
+export async function criarProduto(dados: CriarProdutoDTO): Promise<Produto> {
+  const slug = await gerarSlugUnico(dados.nome)
+  
+  return prisma.produto.create({
     data: {
-      ...data,
-      imagens: data.imagens || [],
+      ...dados,
+      slug,
+      imagens: dados.imagens || [],
     },
+    include: { categoria: true },
   })
 }
 
 /**
  * Get product by ID
  */
-export async function obterProdutoPorId(id: string): Promise<Produto | null> {
-  return await prisma.produto.findUnique({
+export async function obterProduto(id: string): Promise<(Produto & { categoria: any }) | null> {
+  return prisma.produto.findUnique({
     where: { id },
     include: {
       categoria: true,
@@ -48,7 +89,7 @@ export async function obterProdutoPorId(id: string): Promise<Produto | null> {
  * Get product by slug
  */
 export async function obterProdutoPorSlug(slug: string): Promise<Produto | null> {
-  return await prisma.produto.findUnique({
+  return prisma.produto.findUnique({
     where: { slug },
     include: {
       categoria: true,
@@ -57,69 +98,96 @@ export async function obterProdutoPorSlug(slug: string): Promise<Produto | null>
 }
 
 /**
- * List products with filters
+ * List products with filters and pagination
  */
-export async function listarProdutos(options?: {
-  categoriaId?: string
-  activo?: boolean
-  destaque?: boolean
-  busca?: string
-  skip?: number
-  take?: number
-}): Promise<Produto[]> {
+export async function listarProdutos(filtros: FiltrosProduto = {}) {
+  const { categoriaId, activo, destaque, pesquisa, pagina = 1, porPagina = 20 } = filtros
+  
   const where: Prisma.ProdutoWhereInput = {}
-
-  if (options?.categoriaId) {
-    where.categoriaId = options.categoriaId
-  }
-
-  if (options?.activo !== undefined) {
-    where.activo = options.activo
-  }
-
-  if (options?.destaque !== undefined) {
-    where.destaque = options.destaque
-  }
-
-  if (options?.busca) {
+  
+  if (categoriaId) where.categoriaId = categoriaId
+  if (activo !== undefined) where.activo = activo
+  if (destaque !== undefined) where.destaque = destaque
+  if (pesquisa) {
     where.OR = [
-      { nome: { contains: options.busca, mode: 'insensitive' } },
-      { descricao: { contains: options.busca, mode: 'insensitive' } },
+      { nome: { contains: pesquisa, mode: 'insensitive' } },
+      { descricao: { contains: pesquisa, mode: 'insensitive' } },
+      { produtor: { contains: pesquisa, mode: 'insensitive' } },
     ]
   }
-
-  return await prisma.produto.findMany({
-    where,
-    include: {
-      categoria: true,
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-    skip: options?.skip,
-    take: options?.take,
-  })
+  
+  const [produtos, total] = await Promise.all([
+    prisma.produto.findMany({
+      where,
+      include: { categoria: true },
+      orderBy: { createdAt: 'desc' },
+      skip: (pagina - 1) * porPagina,
+      take: porPagina,
+    }),
+    prisma.produto.count({ where }),
+  ])
+  
+  return {
+    produtos,
+    total,
+    paginas: Math.ceil(total / porPagina),
+    paginaActual: pagina,
+  }
 }
 
 /**
  * Update product
  */
-export async function actualizarProduto(
-  id: string,
-  data: Partial<CriarProdutoDTO>
-): Promise<Produto> {
-  return await prisma.produto.update({
+export async function actualizarProduto({ id, ...dados }: ActualizarProdutoDTO): Promise<Produto> {
+  // Se o nome mudar, gerar novo slug
+  let slug: string | undefined
+  if (dados.nome) {
+    const produtoActual = await prisma.produto.findUnique({ where: { id } })
+    if (produtoActual && produtoActual.nome !== dados.nome) {
+      slug = await gerarSlugUnico(dados.nome)
+    }
+  }
+  
+  return prisma.produto.update({
     where: { id },
-    data,
+    data: {
+      ...dados,
+      ...(slug && { slug }),
+    },
+    include: { categoria: true },
   })
 }
 
 /**
  * Delete product
  */
-export async function eliminarProduto(id: string): Promise<void> {
-  await prisma.produto.delete({
+export async function eliminarProduto(id: string): Promise<Produto> {
+  return prisma.produto.delete({ where: { id } })
+}
+
+/**
+ * Toggle active status of product
+ */
+export async function toggleActivoProduto(id: string): Promise<Produto> {
+  const produto = await prisma.produto.findUnique({ where: { id } })
+  if (!produto) throw new Error('Produto não encontrado')
+  
+  return prisma.produto.update({
     where: { id },
+    data: { activo: !produto.activo },
+  })
+}
+
+/**
+ * Toggle featured status of product
+ */
+export async function toggleDestaqueProduto(id: string): Promise<Produto> {
+  const produto = await prisma.produto.findUnique({ where: { id } })
+  if (!produto) throw new Error('Produto não encontrado')
+  
+  return prisma.produto.update({
+    where: { id },
+    data: { destaque: !produto.destaque },
   })
 }
 
@@ -140,5 +208,9 @@ export async function contarProdutos(options?: {
     where.activo = options.activo
   }
 
-  return await prisma.produto.count({ where })
+  return prisma.produto.count({ where })
 }
+
+// Export obterProdutoPorId for backwards compatibility
+export const obterProdutoPorId = obterProduto
+

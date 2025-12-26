@@ -25,3 +25,6 @@ export const createServerSupabaseClient = async () => {
     }
   )
 }
+
+// Export alias for compatibility
+export const createClient = createServerSupabaseClient

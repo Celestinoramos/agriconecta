@@ -148,22 +148,32 @@ model EstadoHistorico {
 // ==================== PRODUTOS ====================
 
 model Produto {
-  id          String   @id @default(cuid())
-  slug        String   @unique
-  nome        String
-  descricao   String?
-  preco       Float    // AOA
-  unidade     String   // kg, unidade, maço, etc.
-  categoriaId String
-  categoria   Categoria @relation(fields: [categoriaId], references: [id])
-  imagens     String[] // URLs do Supabase Storage
-  stock       Int      @default(0)
-  activo      Boolean  @default(true)
-  destaque    Boolean  @default(false)
-  produtor    String?  // Nome do produtor
-  origem      String?  // Província de origem
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                String    @id @default(cuid())
+  slug              String    @unique
+  nome              String
+  descricao         String?   // Descrição curta
+  descricaoCompleta String?   // Descrição longa
+  preco             Float     // AOA
+  unidade           String    @default("unidade") // kg, unidade, maço, etc.
+  
+  categoriaId       String
+  categoria         Categoria @relation(fields: [categoriaId], references: [id])
+  
+  imagens           String[]  // URLs do Supabase Storage
+  stock             Int       @default(0)
+  
+  produtor          String?   // Nome do produtor
+  provincia         String?   // Província de origem (renamed from origem)
+  
+  // Informação nutricional (JSON)
+  nutricional       String?   // JSON: { calorias, proteinas, carboidratos, fibras, gorduras }
+  conservacao       String?   // Dicas de conservação
+  
+  activo            Boolean   @default(true)
+  destaque          Boolean   @default(false)
+  
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
   
   @@index([categoriaId])
   @@index([activo])
