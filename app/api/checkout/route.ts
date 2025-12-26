@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { checkoutSchema } from '@/lib/validations/checkout';
 import { criarPedido } from '@/lib/db/pedidos';
 import { enviarEmailPedidoCriado } from '@/lib/email/send';
+import { parseEnderecoEntrega } from '@/types/pedido';
 
 export async function POST(request: NextRequest) {
   try {
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
           produtoPreco: item.produtoPreco,
           subtotal: item.subtotal,
         })),
-        enderecoEntrega: JSON.parse(pedido.enderecoEntrega),
+        enderecoEntrega: parseEnderecoEntrega(pedido.enderecoEntrega),
         codigoRastreio: pedido.codigoRastreio,
       }
       

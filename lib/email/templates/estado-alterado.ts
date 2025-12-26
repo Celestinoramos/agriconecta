@@ -1,3 +1,5 @@
+import { EstadoPedido } from '@/types/pedido'
+
 interface EstadoAlteradoParams {
   clienteNome: string
   numeroPedido: string
@@ -7,7 +9,17 @@ interface EstadoAlteradoParams {
   linkRastreio: string
 }
 
-const ESTADOS_MENSAGENS: Record<string, { emoji: string; titulo: string; descricao: string }> = {
+const ESTADOS_MENSAGENS: Record<EstadoPedido, { emoji: string; titulo: string; descricao: string }> = {
+  PENDENTE: {
+    emoji: '⏳',
+    titulo: 'Pedido Pendente',
+    descricao: 'O seu pedido está aguardando pagamento.',
+  },
+  PAGO: {
+    emoji: '✅',
+    titulo: 'Pagamento Confirmado',
+    descricao: 'O pagamento do seu pedido foi confirmado.',
+  },
   EM_PREPARACAO: {
     emoji: '📦',
     titulo: 'Pedido em Preparação',
@@ -33,7 +45,7 @@ const ESTADOS_MENSAGENS: Record<string, { emoji: string; titulo: string; descric
 export function templateEstadoAlterado(params: EstadoAlteradoParams): string {
   const { clienteNome, numeroPedido, estadoNovo, mensagem, linkRastreio } = params
 
-  const estadoInfo = ESTADOS_MENSAGENS[estadoNovo] || {
+  const estadoInfo = ESTADOS_MENSAGENS[estadoNovo as EstadoPedido] || {
     emoji: '📋',
     titulo: `Estado: ${estadoNovo}`,
     descricao: 'O estado do seu pedido foi actualizado.',

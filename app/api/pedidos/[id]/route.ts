@@ -4,7 +4,7 @@ import {
   actualizarEstadoPedido,
   adicionarReferenciaPagamento,
 } from '@/lib/db/pedidos';
-import { ActualizarEstadoDTO } from '@/types/pedido';
+import { ActualizarEstadoDTO, ESTADOS_PEDIDO } from '@/types/pedido';
 import { enviarEmailEstadoAlterado, enviarEmailPagamentoConfirmado, enviarEmailPedidoCancelado } from '@/lib/email/send';
 
 export async function GET(
@@ -72,11 +72,11 @@ export async function PATCH(
 
         // Enviar email específico por estado (não bloquear se falhar)
         try {
-          if (estadoNovo === 'PAGO') {
+          if (estadoNovo === ESTADOS_PEDIDO.PAGO) {
             enviarEmailPagamentoConfirmado(pedidoEmail).catch(console.error)
-          } else if (estadoNovo === 'CANCELADO') {
+          } else if (estadoNovo === ESTADOS_PEDIDO.CANCELADO) {
             enviarEmailPedidoCancelado(pedidoEmail, body.nota).catch(console.error)
-          } else if (['EM_PREPARACAO', 'EM_TRANSITO', 'ENTREGUE'].includes(estadoNovo)) {
+          } else if ([ESTADOS_PEDIDO.EM_PREPARACAO, ESTADOS_PEDIDO.EM_TRANSITO, ESTADOS_PEDIDO.ENTREGUE].includes(estadoNovo as any)) {
             enviarEmailEstadoAlterado(pedidoEmail, estadoAnterior, estadoNovo, body.nota).catch(console.error)
           }
         } catch (emailError) {

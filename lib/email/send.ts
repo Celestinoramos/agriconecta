@@ -29,9 +29,15 @@ const DADOS_BANCARIOS = {
   titular: process.env.BANCO_TITULAR || 'AgriConecta Lda',
 }
 
+/**
+ * Resultado do envio de email
+ */
 interface EnviarEmailResult {
+  /** Indica se o email foi enviado com sucesso */
   success: boolean
+  /** ID da mensagem retornado pelo Resend (apenas quando success=true) */
   messageId?: string
+  /** Mensagem de erro (apenas quando success=false) */
   error?: string
 }
 
@@ -68,6 +74,10 @@ async function enviarEmail(
 
 // ==================== FUNÇÕES ESPECÍFICAS ====================
 
+/**
+ * Dados do pedido formatados para envio de emails.
+ * Serve como camada de abstração entre o modelo Prisma e os templates de email.
+ */
 export interface PedidoParaEmail {
   id: string
   numero: string
