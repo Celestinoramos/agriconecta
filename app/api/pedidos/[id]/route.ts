@@ -76,7 +76,11 @@ export async function PATCH(
             enviarEmailPagamentoConfirmado(pedidoEmail).catch(console.error)
           } else if (estadoNovo === ESTADOS_PEDIDO.CANCELADO) {
             enviarEmailPedidoCancelado(pedidoEmail, body.nota).catch(console.error)
-          } else if ([ESTADOS_PEDIDO.EM_PREPARACAO, ESTADOS_PEDIDO.EM_TRANSITO, ESTADOS_PEDIDO.ENTREGUE].includes(estadoNovo as any)) {
+          } else if (
+            estadoNovo === ESTADOS_PEDIDO.EM_PREPARACAO ||
+            estadoNovo === ESTADOS_PEDIDO.EM_TRANSITO ||
+            estadoNovo === ESTADOS_PEDIDO.ENTREGUE
+          ) {
             enviarEmailEstadoAlterado(pedidoEmail, estadoAnterior, estadoNovo, body.nota).catch(console.error)
           }
         } catch (emailError) {

@@ -73,12 +73,7 @@ AgriConecta - Marketplace Agrícola de Angola
 }
 
 export function assuntoEstadoAlterado(numeroPedido: string, estadoNovo: string): string {
-  const emojis: Record<string, string> = {
-    EM_PREPARACAO: '📦',
-    EM_TRANSITO: '🚚',
-    ENTREGUE: '✅',
-    CANCELADO: '❌',
-  }
-  const emoji = emojis[estadoNovo] || '📋'
+  const estadoInfo = ESTADOS_MENSAGENS[estadoNovo as EstadoPedido]
+  const emoji = estadoInfo?.emoji || '📋'
   return `${emoji} Actualização do Pedido ${numeroPedido}`
 }
