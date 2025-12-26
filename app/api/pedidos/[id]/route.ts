@@ -4,7 +4,8 @@ import {
   actualizarEstadoPedido,
   adicionarReferenciaPagamento,
 } from '@/lib/db/pedidos';
-import { ActualizarEstadoDTO } from '@/types/pedido';
+import { ActualizarEstadoDTO, ESTADOS_PEDIDO } from '@/types/pedido';
+import { enviarEmailEstadoAlterado, enviarEmailPagamentoConfirmado, enviarEmailPedidoCancelado } from '@/lib/email/send';
 
 export async function GET(
   _request: NextRequest,
@@ -55,6 +56,38 @@ export async function PATCH(
       };
       
       const pedido = await actualizarEstadoPedido(params.id, dados);
+      
+      // Enviar email apropriado após actualizar estado
+      const estadoAnterior = pedidoExistente.estado
+      const estadoNovo = pedido.estado
+
+      if (estadoAnterior !== estadoNovo) {
+        const pedidoEmail = {
+          id: pedido.id,
+          numero: pedido.numero,
+          clienteNome: pedido.clienteNome,
+          clienteEmail: pedido.clienteEmail,
+          total: pedido.total,
+        }
+
+        // Enviar email específico por estado (não bloquear se falhar)
+        try {
+          if (estadoNovo === ESTADOS_PEDIDO.PAGO) {
+            enviarEmailPagamentoConfirmado(pedidoEmail).catch(console.error)
+          } else if (estadoNovo === ESTADOS_PEDIDO.CANCELADO) {
+            enviarEmailPedidoCancelado(pedidoEmail, body.nota).catch(console.error)
+          } else if (
+            estadoNovo === ESTADOS_PEDIDO.EM_PREPARACAO ||
+            estadoNovo === ESTADOS_PEDIDO.EM_TRANSITO ||
+            estadoNovo === ESTADOS_PEDIDO.ENTREGUE
+          ) {
+            enviarEmailEstadoAlterado(pedidoEmail, estadoAnterior, estadoNovo, body.nota).catch(console.error)
+          }
+        } catch (emailError) {
+          console.error('Erro ao enviar email de mudança de estado:', emailError)
+        }
+      }
+      
       return NextResponse.json(pedido);
     }
     

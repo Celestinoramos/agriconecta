@@ -1,41 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkoutSchema } from '@/lib/validations/checkout';
 import { criarPedido } from '@/lib/db/pedidos';
-import { Resend } from 'resend';
-
-// Initialize Resend client only if API key is available
-const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
-
-async function enviarEmailRastreio({
-  nome,
-  codigoRastreio,
-  numeroPedido
-}: {
-  email: string,
-  nome: string,
-  codigoRastreio: string,
-  numeroPedido: string
-}) {
-  // Skip email sending if Resend is not configured
-  if (!resend) {
-    console.warn('Resend API key not configured. Skipping email sending.');
-    return null;
-  }
-  
-  return resend.emails.send({
-    from: "no-reply@teudominio.com",
-    to: 'ramoscumbica2@gmail.com',
-    subject: `Seu pedido (#${numeroPedido}) foi realizado!`,
-    html: `
-      <p>Olá ${nome},</p>
-      <p>Seu pedido foi recebido com sucesso!</p>
-      <p><b>Código de rastreio:</b> <code>${codigoRastreio}</code></p>
-      <p>Pode acompanhar o status <a href="https://teusite.com/pedido/${numeroPedido}/rastreio">neste link.</a></p>
-      <br>
-      <p>Obrigado por comprar no AgriConecta!</p>
-    `
-  });
-}
+import { enviarEmailPedidoCriado } from '@/lib/email/send';
+import { parseEnderecoEntrega } from '@/types/pedido';
 
 export async function POST(request: NextRequest) {
   try {
@@ -56,15 +23,35 @@ export async function POST(request: NextRequest) {
       userId: undefined, // Guest checkout for now
     });
 
-// >>>>>>>> CHAMA O EMAIL AQUI <<<<<<<<<<
-    if (pedido.clienteEmail) { // só se existe e-mail!
-      await enviarEmailRastreio({
-        email: pedido.clienteEmail,
-        nome: pedido.clienteNome,
+    // Enviar emails (não bloquear resposta se falhar)
+    try {
+      const pedidoParaEmail = {
+        id: pedido.id,
+        numero: pedido.numero,
+        clienteNome: pedido.clienteNome,
+        clienteEmail: pedido.clienteEmail,
+        clienteTelefone: pedido.clienteTelefone || '',
+        total: pedido.total,
+        subtotal: pedido.subtotal,
+        taxaEntrega: pedido.taxaEntrega,
+        itens: pedido.itens.map(item => ({
+          produtoNome: item.produtoNome,
+          quantidade: item.quantidade,
+          produtoPreco: item.produtoPreco,
+          subtotal: item.subtotal,
+        })),
+        enderecoEntrega: parseEnderecoEntrega(pedido.enderecoEntrega),
         codigoRastreio: pedido.codigoRastreio,
-        numeroPedido: pedido.numero,
-      });
+      }
+      
+      // Enviar em background (não aguardar)
+      enviarEmailPedidoCriado(pedidoParaEmail).catch(err => {
+        console.error('Erro ao enviar emails do pedido:', err)
+      })
+    } catch (emailError) {
+      console.error('Erro ao preparar emails:', emailError)
     }
+
     return NextResponse.json({
       success: true,
       pedidoId: pedido.id,
