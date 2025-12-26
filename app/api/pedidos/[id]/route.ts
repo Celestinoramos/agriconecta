@@ -4,8 +4,9 @@ import {
   actualizarEstadoPedido,
   adicionarReferenciaPagamento,
 } from '@/lib/db/pedidos';
-import { ActualizarEstadoDTO, ESTADOS_PEDIDO } from '@/types/pedido';
-import { enviarEmailEstadoAlterado, enviarEmailPagamentoConfirmado, enviarEmailPedidoCancelado } from '@/lib/email/send';
+import { ActualizarEstadoDTO, parseEnderecoEntrega } from '@/types/pedido';
+import { enviarEmailPorMudancaEstado } from '@/lib/email/send';
+import type { PedidoEmailData } from '@/lib/email/send';
 
 export async function GET(
   _request: NextRequest,
@@ -62,29 +63,39 @@ export async function PATCH(
       const estadoNovo = pedido.estado
 
       if (estadoAnterior !== estadoNovo) {
-        const pedidoEmail = {
-          id: pedido.id,
-          numero: pedido.numero,
-          clienteNome: pedido.clienteNome,
-          clienteEmail: pedido.clienteEmail,
-          total: pedido.total,
-        }
-
-        // Enviar email específico por estado (não bloquear se falhar)
+        // Preparar dados do pedido para email
         try {
-          if (estadoNovo === ESTADOS_PEDIDO.PAGO) {
-            enviarEmailPagamentoConfirmado(pedidoEmail).catch(console.error)
-          } else if (estadoNovo === ESTADOS_PEDIDO.CANCELADO) {
-            enviarEmailPedidoCancelado(pedidoEmail, body.nota).catch(console.error)
-          } else if (
-            estadoNovo === ESTADOS_PEDIDO.EM_PREPARACAO ||
-            estadoNovo === ESTADOS_PEDIDO.EM_TRANSITO ||
-            estadoNovo === ESTADOS_PEDIDO.ENTREGUE
-          ) {
-            enviarEmailEstadoAlterado(pedidoEmail, estadoAnterior, estadoNovo, body.nota).catch(console.error)
+          const pedidoParaEmail: PedidoEmailData = {
+            id: pedido.id,
+            numero: pedido.numero,
+            clienteNome: pedido.clienteNome,
+            clienteEmail: pedido.clienteEmail,
+            clienteTelefone: pedido.clienteTelefone || '',
+            itens: pedido.itens.map((item: any) => ({
+              nome: item.produtoNome,
+              quantidade: item.quantidade,
+              precoUnitario: Number(item.produtoPreco),
+              subtotal: Number(item.subtotal),
+            })),
+            subtotal: Number(pedido.subtotal),
+            taxaEntrega: Number(pedido.taxaEntrega),
+            total: Number(pedido.total),
+            endereco: typeof pedido.enderecoEntrega === 'string' 
+              ? parseEnderecoEntrega(pedido.enderecoEntrega)
+              : pedido.enderecoEntrega,
+            codigoRastreio: pedido.codigoRastreio,
           }
+
+          // Enviar email em background (não bloquear resposta)
+          enviarEmailPorMudancaEstado(pedidoParaEmail, estadoAnterior, estadoNovo, body.nota)
+            .then(result => {
+              console.log(`📧 Email enviado para mudança ${estadoAnterior} → ${estadoNovo}:`, result)
+            })
+            .catch(err => {
+              console.error('❌ Erro ao enviar email de mudança de estado:', err)
+            })
         } catch (emailError) {
-          console.error('Erro ao enviar email de mudança de estado:', emailError)
+          console.error('❌ Erro ao preparar email de mudança de estado:', emailError)
         }
       }
       
