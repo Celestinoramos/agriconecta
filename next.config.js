@@ -42,8 +42,8 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline'",
               "img-src 'self' data: https://images.unsplash.com",
               "font-src 'self' data:",
-              // PATCHED:
-              "connect-src 'self' https://sdwgxoilvpsquqqrzwvv.supabase.co https://sdwgxoilvpsquqqrzwvv.supabase.co/*",
+              // PATCH FINAL CORRETO:
+              "connect-src 'self' https://sdwgxoilvpsquqqrzwvv.supabase.co wss://sdwgxoilvpsquqqrzwvv.supabase.co",
               "frame-ancestors 'none'",
               "base-uri 'self'",
               "form-action 'self'",
