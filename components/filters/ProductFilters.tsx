@@ -86,14 +86,14 @@ export default function ProductFilters({
       <div className="space-y-2">
         <Label htmlFor="categoria">Categoria</Label>
         <Select
-          value={filters.categoria}
+          value={filters.categoria || undefined} // <-- patch
           onValueChange={(value) => updateFilter('categoria', value)}
         >
           <SelectTrigger id="categoria">
             <SelectValue placeholder="Todas as categorias" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Todas as categorias</SelectItem>
+            {/* REMOVIDO: <SelectItem value="">Todas as categorias</SelectItem> */}
             {categorias.map((categoria) => (
               <SelectItem key={categoria} value={categoria}>
                 {categoria}
@@ -132,14 +132,14 @@ export default function ProductFilters({
       <div className="space-y-2">
         <Label htmlFor="provincia">Província</Label>
         <Select
-          value={filters.provincia}
+          value={filters.provincia || undefined} // <-- patch
           onValueChange={(value) => updateFilter('provincia', value)}
         >
           <SelectTrigger id="provincia">
             <SelectValue placeholder="Todas as províncias" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Todas as províncias</SelectItem>
+            {/* REMOVIDO: <SelectItem value="">Todas as províncias</SelectItem> */}
             {provincias.map((provincia) => (
               <SelectItem key={provincia} value={provincia}>
                 {provincia}
@@ -153,14 +153,14 @@ export default function ProductFilters({
       <div className="space-y-2">
         <Label htmlFor="produtor">Produtor</Label>
         <Select
-          value={filters.produtor}
+          value={filters.produtor || undefined} // <-- patch
           onValueChange={(value) => updateFilter('produtor', value)}
         >
           <SelectTrigger id="produtor">
             <SelectValue placeholder="Todos os produtores" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">Todos os produtores</SelectItem>
+            {/* REMOVIDO: <SelectItem value="">Todos os produtores</SelectItem> */}
             {produtores.map((produtor) => (
               <SelectItem key={produtor} value={produtor}>
                 {produtor}
