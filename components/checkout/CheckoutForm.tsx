@@ -107,17 +107,18 @@ export default function CheckoutForm() {
         throw new Error(result.error || 'Erro ao criar pedido');
       }
 
-      // Clear cart after successful order
-      clearCartAfterPurchase();
-
-      // Show success message
+      // Show success message e REDIRECIONA PARA O RASTREIO PRIMEIRO
       toast.success('Pedido criado com sucesso!');
-
-      // Redirect to order tracking page
       router.push(`/pedido/${result.pedidoId}/rastreio`);
+
+      // Só então limpa o carrinho para evitar redirect indesejado
+      setTimeout(() => {
+        clearCartAfterPurchase();
+      }, 800);
+
     } catch (error) {
       console.error('Erro no checkout:', error);
-      
+
       if ((error as any).errors) {
         // Zod validation errors
         const newErrors: Record<string, string> = {};
@@ -195,26 +196,6 @@ export default function CheckoutForm() {
                 )}
                 <p className="mt-1 text-xs text-gray-500">Para receber confirmação e fatura por email</p>
               </div>
-
-              {/* <div>
-                <label htmlFor="" className="block text-sm font-medium mb-1">
-                  Telefone (opcional)
-                </label>
-                <input
-                  id=""
-                  type="tel"
-                  value={formData.}
-                  onChange={(e) => handleInputChange('', e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${
-                    errors. ? 'border-red-500' : 'border-gray-300'
-                  }`}
-                  placeholder="244XXXXXXXXX"
-                />
-                {errors. && (
-                  <p className="mt-1 text-sm text-red-500">{errors.}</p>
-                )}
-                <p className="mt-1 text-xs text-gray-500">Formato: 244XXXXXXXXX</p>
-              </div> */}
             </CardContent>
           </Card>
 
