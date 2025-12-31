@@ -35,7 +35,7 @@ export type PedidoCompleto = Prisma.PedidoGetPayload<{
 export interface CriarPedidoDTO {
   clienteNome: string;
   clienteEmail: string;
-  clienteTelefone?: string;
+  ?: string;
   enderecoEntrega: {
     rua: string;
     bairro: string;

@@ -39,7 +39,7 @@ async function main() {
       userId: user.id,
       clienteNome: 'Utilizador Teste',
       clienteEmail: 'teste@agriconecta.ao',
-      clienteTelefone: '244923456789',
+      : '244923456789',
       enderecoEntrega: JSON.stringify({
         rua: 'Rua da Missão, 123',
         bairro: 'Maianga',
