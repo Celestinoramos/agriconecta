@@ -149,10 +149,6 @@ export default async function AdminPedidoDetailPage({
                   <p className="font-medium">{pedido.clienteEmail}</p>
                 </div>
               )}
-              {/* <div>
-                <p className="text-gray-600">Telefone</p>
-                <p className="font-medium">{pedido.clienteTelefone}</p>
-              </div> */}
             </div>
           </div>
 
