@@ -94,8 +94,7 @@ export async function PATCH(
         id: pedidoActualizado.id,
         numero: pedidoActualizado.numero,
         clienteNome: pedidoActualizado.clienteNome,
-        clienteEmail: pedidoActualizado.clienteEmail,
-        clienteTelefone: pedidoActualizado.clienteTelefone || '',
+        clienteEmail: pedidoActualizado.clienteEmail || '',
         itens: pedidoActualizado.itens.map((item: any) => ({
           nome: item.produtoNome,
           quantidade: item.quantidade,

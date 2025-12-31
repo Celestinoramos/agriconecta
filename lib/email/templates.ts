@@ -35,7 +35,6 @@ export interface PedidoEmailData {
   numero: string
   clienteNome: string
   clienteEmail: string | null
-  clienteTelefone: string
   itens: ItemEmail[]
   subtotal: number
   taxaEntrega: number
@@ -126,8 +125,8 @@ Data: ${new Date().toLocaleString('pt-AO')}
 
 CLIENTE:
   Nome: ${pedido.clienteNome}
-  Email: ${pedido.clienteEmail || 'Não fornecido'}
-  Telefone: ${pedido.clienteTelefone}
+  Email: ${pedido.clienteEmail}
+
 
 ENTREGA:
   ${pedido.endereco.provincia} - ${pedido.endereco.municipio}
