@@ -4,7 +4,6 @@ interface PedidoCriadoAdminParams {
   numeroPedido: string
   clienteNome: string
   clienteEmail: string
-  : string
   total: number
   totalItens: number
   provincia: string
@@ -16,7 +15,6 @@ export function templatePedidoCriadoAdmin(params: PedidoCriadoAdminParams): stri
     numeroPedido,
     clienteNome,
     clienteEmail,
-    ,
     total,
     totalItens,
     provincia,
@@ -32,7 +30,6 @@ PEDIDO: ${numeroPedido}
 
 Cliente: ${clienteNome}
 Email: ${clienteEmail || 'Não fornecido'}
-Telefone: ${}
 Província: ${provincia}
 
 Total de Itens: ${totalItens}
