@@ -185,7 +185,6 @@ export interface PedidoParaEmail {
   numero: string
   clienteNome: string
   clienteEmail?: string | null
-  clienteTelefone: string
   total: number
   subtotal: number
   taxaEntrega: number
@@ -216,7 +215,6 @@ export async function enviarEmailPedidoCriado(
     numero: pedido.numero,
     clienteNome: pedido.clienteNome,
     clienteEmail: pedido.clienteEmail || null,
-    clienteTelefone: pedido.clienteTelefone,
     itens: pedido.itens.map(item => ({
       nome: item.produtoNome,
       quantidade: item.quantidade,
