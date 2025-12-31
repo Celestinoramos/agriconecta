@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import produtos from "@/data/produtos.json";
+import CarouselBase from "@/components/CarouselBase";
 
 export default function Home() {
   // Get first 3 products for featured section
@@ -10,28 +11,35 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      {/* Hero Section - Mobile First */}
-      <section className="bg-gradient-to-br from-green-600 to-green-700 text-white py-12 px-4 sm:py-16 md:py-20">
-        <div className="max-w-6xl mx-auto text-center">
-          <h1 className="text-3xl font-bold mb-4 sm:text-4xl md:text-5xl lg:text-6xl">
+      {/* Hero Section mesclado com Carousel - Ajuste altura conforme header */}
+      <section className="relative w-full min-h-[calc(100vh-64px)] flex items-center justify-center overflow-hidden">
+        {/* Carrossel ocupa o fundo inteiro */}
+        <div className="absolute inset-0 w-full h-full z-0">
+          <CarouselBase />
+        </div>
+        {/* Overlay de conteúdo centralizado sobre o carrossel */}
+        <div className="relative z-10 flex flex-col items-center justify-center w-full px-4 text-center">
+          <h1 className="text-3xl font-bold mb-4 sm:text-4xl md:text-5xl lg:text-6xl text-white drop-shadow-lg">
             Bem-vindo ao AgriConecta
           </h1>
-          <p className="text-lg mb-4 text-green-100 sm:text-xl md:text-2xl md:mb-6">
+          <p className="text-lg mb-4 text-green-50 sm:text-xl md:text-2xl md:mb-6 drop-shadow">
             Conectando agricultores e consumidores em Angola
           </p>
-          <p className="text-base mb-6 max-w-2xl mx-auto sm:text-lg md:mb-8">
+          <p className="text-base mb-6 max-w-2xl mx-auto sm:text-lg md:mb-8 text-white/90 drop-shadow">
             Compre produtos frescos diretamente dos produtores locais. 
             Apoie a agricultura angolana e desfrute da qualidade dos nossos produtos.
           </p>
-          <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 sm:justify-center">
-            <Button asChild size="lg" className="bg-white text-green-700 hover:bg-green-50 min-h-[44px] w-full sm:w-auto">
-              <Link href="/produtos">Ver Produtos</Link>
-            </Button>
-          </div>
+          <Button asChild size="lg" className="bg-white text-green-700 hover:bg-green-50 min-h-[44px] w-full sm:w-auto font-semibold shadow-md">
+            <Link href="/produtos">Ver Produtos</Link>
+          </Button>
+        </div>
+        {/* Seta scroll opcional */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-white text-2xl opacity-70 z-20">
+          ↓
         </div>
       </section>
 
-      {/* Featured Products Section - Mobile First Grid */}
+      {/* Featured Products Section */}
       <section className="py-12 px-4 sm:py-14 md:py-16">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8 sm:mb-10 md:mb-12">
@@ -98,7 +106,6 @@ export default function Home() {
               Por que escolher o AgriConecta?
             </h2>
           </div>
-
           <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-3">
             <div className="text-center px-4">
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">

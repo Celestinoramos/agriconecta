@@ -14,10 +14,7 @@ import { USER_ROLES } from '@/lib/auth/roles';
 const navLinks = [
   { href: '/', label: 'Início' },
   { href: '/produtos', label: 'Produtos' },
-  { href: '/servicos', label: 'Serviços' },
   { href: '/dicas', label: 'Dicas' },
-  { href: '/sobre', label: 'Sobre' },
-  { href: '/contacto', label: 'Contacto' },
 ];
 
 export default function Header() {

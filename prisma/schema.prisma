@@ -2,6 +2,7 @@ datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
+  connection_limit = 2
 }
 
 generator client {
@@ -59,7 +60,6 @@ model Pedido {
   // Dados do cliente (sempre preenchidos, mesmo para utilizadores registados)
   clienteNome     String
   clienteEmail    String
-  clienteTelefone String?
   
   // Endereço de entrega (snapshot JSON)
   enderecoEntrega String          // JSON armazenado como String para compatibilidade SQLite

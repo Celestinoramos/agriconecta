@@ -20,7 +20,6 @@ export default function CheckoutForm() {
   // Form state
   const [formData, setFormData] = useState({
     clienteNome: '',
-    clienteTelefone: '',
     clienteEmail: '',
     endereco: {
       rua: '',
@@ -197,7 +196,7 @@ export default function CheckoutForm() {
                 <p className="mt-1 text-xs text-gray-500">Para receber confirmação e fatura por email</p>
               </div>
 
-              <div>
+              {/* <div>
                 <label htmlFor="clienteTelefone" className="block text-sm font-medium mb-1">
                   Telefone (opcional)
                 </label>
@@ -215,7 +214,7 @@ export default function CheckoutForm() {
                   <p className="mt-1 text-sm text-red-500">{errors.clienteTelefone}</p>
                 )}
                 <p className="mt-1 text-xs text-gray-500">Formato: 244XXXXXXXXX</p>
-              </div>
+              </div> */}
             </CardContent>
           </Card>
 
