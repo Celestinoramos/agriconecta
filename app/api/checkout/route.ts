@@ -15,7 +15,6 @@ export async function POST(request: NextRequest) {
     const pedido = await criarPedido({
       clienteNome: validatedData.clienteNome,
       clienteEmail: validatedData.clienteEmail,
-      clienteTelefone: validatedData.clienteTelefone || undefined,
       enderecoEntrega: validatedData.endereco,
       itens: validatedData.itens,
       metodoPagamento: 'TRANSFERENCIA_BANCARIA',
