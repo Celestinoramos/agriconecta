@@ -34,10 +34,10 @@ export default function CheckoutForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Redirect if cart is empty
-  if (items.length === 0) {
-    router.push('/carrinho');
-    return null;
-  }
+  // if (items.length === 0) {
+  //   router.push('/carrinho');
+  //   return null;
+  // }
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
