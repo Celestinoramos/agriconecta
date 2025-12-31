@@ -189,7 +189,6 @@ const FaturaPDF: React.FC<FaturaPDFProps> = ({ pedido, qrCodeUrl }) => {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Dados do Cliente</Text>
           <Text>{pedido.clienteNome}</Text>
-          <Text>{pedido.}</Text>
           {pedido.clienteEmail && <Text>{pedido.clienteEmail}</Text>}
           <View style={{ marginTop: 8 }}>
             <Text style={styles.label}>Endereço de Entrega:</Text>
