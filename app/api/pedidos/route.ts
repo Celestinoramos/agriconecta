@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     const body: CriarPedidoDTO = await request.json();
     
     // Validação básica
-    if (!body.clienteNome || !body.) {
+    if (!body.clienteNome) {
       return NextResponse.json(
         { error: 'Nome e telefone do cliente são obrigatórios' },
         { status: 400 }

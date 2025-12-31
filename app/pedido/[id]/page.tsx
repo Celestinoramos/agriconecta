@@ -156,7 +156,6 @@ export default async function PedidoPage({ params }: PageProps) {
                 <CardContent>
                   <div className="space-y-1 text-sm">
                     <p className="font-medium">{pedido.clienteNome}</p>
-                    <p className="text-gray-600">{pedido.}</p>
                     {pedido.clienteEmail && (
                       <p className="text-gray-600">{pedido.clienteEmail}</p>
                     )}
