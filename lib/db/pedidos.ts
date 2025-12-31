@@ -73,7 +73,6 @@ export async function criarPedido(dados: CriarPedidoDTO) {
       userId: dados.userId,
       clienteNome: dados.clienteNome,
       clienteEmail: dados.clienteEmail,
-      clienteTelefone: dados.clienteTelefone,
       enderecoEntrega: JSON.stringify(dados.enderecoEntrega), // Stringify para SQLite
       metodoPagamento: dados.metodoPagamento,
       notasCliente: dados.notasCliente,
