@@ -3,6 +3,8 @@ import { prisma } from '@/lib/prisma'
 import bcrypt from 'bcryptjs'
 import { cookies } from 'next/headers'
 
+const ADMIN_SESSION_DURATION_SECONDS = 60 * 60 * 24 // 24 horas
+
 export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json()
@@ -48,7 +50,7 @@ export async function POST(request: NextRequest) {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
-      maxAge: 60 * 60 * 24, // 24 horas
+      maxAge: ADMIN_SESSION_DURATION_SECONDS,
       path: '/',
     })
     

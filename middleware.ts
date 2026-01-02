@@ -39,7 +39,11 @@ async function checkAdminSession(request: NextRequest): Promise<boolean> {
       return false
     }
     const session = JSON.parse(sessionCookie.value)
-    return !!(session && session.id && (session.role === 'ADMIN' || session.role === 'SUPER_ADMIN'))
+    // Validate session structure
+    if (!session || typeof session.id !== 'string' || typeof session.role !== 'string') {
+      return false
+    }
+    return session.role === 'ADMIN' || session.role === 'SUPER_ADMIN'
   } catch {
     return false
   }

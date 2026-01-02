@@ -33,7 +33,8 @@ export default function AdminLoginPage() {
       router.push('/admin')
       router.refresh()
     } catch (error: any) {
-      toast.error(error.message)
+      const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido'
+      toast.error(errorMessage)
     } finally {
       setLoading(false)
     }
