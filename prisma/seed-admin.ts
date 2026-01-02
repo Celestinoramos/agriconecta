@@ -7,6 +7,8 @@ async function main() {
   const adminEmail = 'admin@agriconecta.com'
   const adminPassword = 'Test0102'
   
+  console.log('🔐 A criar/atualizar utilizador admin...')
+  
   // Hash da password
   const hashedPassword = await bcrypt.hash(adminPassword, 12)
   
@@ -16,6 +18,7 @@ async function main() {
     update: {
       role: 'SUPER_ADMIN',
       password: hashedPassword,
+      nome: 'Administrador',
     },
     create: {
       email: adminEmail,
@@ -26,9 +29,20 @@ async function main() {
     },
   })
   
-  console.log('✅ Admin criado/atualizado:', admin.email)
+  console.log('✅ Admin criado/atualizado com sucesso!')
+  console.log(`   Email: ${admin.email}`)
+  console.log(`   Role: ${admin.role}`)
+  console.log('')
+  console.log('🔑 Credenciais de acesso:')
+  console.log(`   Email: ${adminEmail}`)
+  console.log(`   Password: ${adminPassword}`)
+  console.log('')
+  console.log('🌐 Aceda a: /admin/login')
 }
 
 main()
-  .catch(console.error)
+  .catch((error) => {
+    console.error('❌ Erro ao criar admin:', error)
+    process.exit(1)
+  })
   .finally(() => prisma.$disconnect())

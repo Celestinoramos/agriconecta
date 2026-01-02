@@ -1,7 +1,7 @@
 'use client'
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { 
   LayoutDashboard, 
   Package, 
@@ -12,6 +12,7 @@ import {
   FileText,
   BarChart3
 } from "lucide-react"
+import { toast } from 'sonner'
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
@@ -25,13 +26,33 @@ const navItems = [
 
 export function Sidebar() {
   const pathname = usePathname()
+  const router = useRouter()
+  
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/api/auth/admin-logout', {
+        method: 'POST',
+      })
+      
+      if (response.ok) {
+        toast.success('Sessão terminada')
+        router.push('/admin/login')
+        router.refresh()
+      } else {
+        toast.error('Erro ao terminar sessão')
+      }
+    } catch (error) {
+      console.error('Logout error:', error)
+      toast.error('Erro ao terminar sessão')
+    }
+  }
   
   return (
     <aside className="w-64 bg-white border-r min-h-screen flex flex-col">
       <div className="px-6 py-8">
-        <Link href="/" className="text-2xl font-bold text-green-600">
-          AgriConecta
-        </Link>
+        <div className="text-2xl font-bold text-green-600">
+          🌾 AgriConecta
+        </div>
         <p className="text-sm text-gray-500 mt-1">Painel Admin</p>
       </div>
       
@@ -63,19 +84,11 @@ export function Sidebar() {
       
       <div className="px-4 py-6 border-t">
         <button
-          onClick={async () => {
-            try {
-              await fetch('/api/auth/admin-logout', { method: 'POST' })
-              window.location.href = '/admin/login'
-            } catch (error) {
-              console.error('Logout error:', error)
-              window.location.href = '/admin/login'
-            }
-          }}
-          className="flex items-center gap-3 px-4 py-3 w-full text-left text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+          onClick={handleLogout}
+          className="flex items-center gap-3 px-4 py-3 w-full text-left text-red-600 hover:bg-red-50 rounded-lg transition-colors"
         >
           <LogOut className="w-5 h-5" />
-          Sair
+          Terminar Sessão
         </button>
       </div>
     </aside>
