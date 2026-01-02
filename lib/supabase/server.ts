@@ -1,7 +1,7 @@
-import { createServerClient } from '@supabase/auth-helpers-nextjs'
+import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 
-export const createServerSupabaseClient = async () => {
+export async function createServerSupabaseClient() {
   const cookieStore = await cookies()
 
   return createServerClient(
@@ -18,7 +18,8 @@ export const createServerSupabaseClient = async () => {
               cookieStore.set(name, value, options)
             )
           } catch {
-            // Handle error
+            // The `setAll` method was called from a Server Component.
+            // This can be ignored if you have middleware refreshing user sessions.
           }
         },
       },
@@ -26,5 +27,4 @@ export const createServerSupabaseClient = async () => {
   )
 }
 
-// Export alias for compatibility
 export const createClient = createServerSupabaseClient
