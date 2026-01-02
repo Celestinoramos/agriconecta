@@ -63,9 +63,14 @@ export function Sidebar() {
       
       <div className="px-4 py-6 border-t">
         <button
-          onClick={() => {
-            // TODO: Implement sign out
-            window.location.href = '/login'
+          onClick={async () => {
+            try {
+              await fetch('/api/auth/admin-logout', { method: 'POST' })
+              window.location.href = '/admin/login'
+            } catch (error) {
+              console.error('Logout error:', error)
+              window.location.href = '/admin/login'
+            }
           }}
           className="flex items-center gap-3 px-4 py-3 w-full text-left text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
         >

@@ -32,8 +32,42 @@ function isAdminRoute(pathname: string): boolean {
   return adminRoutes.some(route => pathname.startsWith(route))
 }
 
+async function checkAdminSession(request: NextRequest): Promise<boolean> {
+  try {
+    const sessionCookie = request.cookies.get('admin-session')
+    if (!sessionCookie?.value) {
+      return false
+    }
+    const session = JSON.parse(sessionCookie.value)
+    // Validate session structure
+    if (!session || typeof session.id !== 'string' || typeof session.role !== 'string') {
+      return false
+    }
+    return session.role === 'ADMIN' || session.role === 'SUPER_ADMIN'
+  } catch {
+    return false
+  }
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+  
+  // Check admin routes first
+  if (isAdminRoute(pathname)) {
+    // Allow access to login page
+    if (pathname === '/admin/login') {
+      return NextResponse.next()
+    }
+    
+    // Check admin session for all other admin routes
+    const hasAdminSession = await checkAdminSession(request)
+    if (!hasAdminSession) {
+      const loginUrl = new URL('/admin/login', request.url)
+      return NextResponse.redirect(loginUrl)
+    }
+    
+    return NextResponse.next()
+  }
   
   const { supabaseResponse, user } = await updateSession(request)
   
@@ -45,10 +79,6 @@ export async function middleware(request: NextRequest) {
     const loginUrl = new URL('/login', request.url)
     loginUrl.searchParams.set('redirect', pathname)
     return NextResponse.redirect(loginUrl)
-  }
-  
-  if (isAdminRoute(pathname)) {
-    return supabaseResponse
   }
   
   return supabaseResponse
