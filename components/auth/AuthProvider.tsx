@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useEffect, useState } from 'react'
-import { User } from '@supabase/supabase-js'
+import { User, AuthError } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
 import { UserRole } from '@/lib/auth/roles'
 
@@ -20,8 +20,8 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 // Tradução de erros para português
-function translateAuthError(error: any): string {
-  const errorCode = error?.message || error?.code || ''
+function translateAuthError(error: AuthError | Error): string {
+  const errorMessage = error?.message || ''
   
   const translations: Record<string, string> = {
     'Invalid login credentials': 'Credenciais de login inválidas',
@@ -36,7 +36,7 @@ function translateAuthError(error: any): string {
   }
   
   for (const [key, value] of Object.entries(translations)) {
-    if (errorCode.includes(key)) {
+    if (errorMessage.includes(key)) {
       return value
     }
   }

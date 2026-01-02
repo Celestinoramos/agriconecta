@@ -30,14 +30,14 @@ export async function getServerSession(): Promise<ServerSession | null> {
       }
     })
 
-    if (!user) {
+    if (!user || !user.email) {
       return null
     }
 
     return {
       user: {
         id: user.id,
-        email: user.email!,
+        email: user.email,
         nome: user.nome,
         role: user.role as UserRole,
       }
